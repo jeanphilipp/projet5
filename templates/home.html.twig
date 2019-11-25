@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ dump(bookings) }}
+    {% for booking in bookings %}
+        {{ booking.id }}
+    {% endfor %}
+
+{% endblock %}
+
+
+
+

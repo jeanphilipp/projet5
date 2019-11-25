@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Le Chat Botté</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+</head>
+<body>
+<header id="intro">
+    <article class="fullheight">
+        <div class="hgroup">
+            <h1>Pension féline Le Chat Botté</h1>
+            <p><a href="#"><img src="images/arrow.png" alt="down arrow"></a></p>
+        </div>
+    </article>
+
+    <nav id="nav">
+        <ul>
+            <li><a class="navigation" href="{{ path('app_home_homepage') }}"><span>Accueil</span></a></li>
+            <li><a class="navigation" href="{{ path('about_us') }}"><span>Qui sommes-nous ?</span></a></li>
+            <li><a class="navigation" href="#"><span>Réserver</span></a></li>
+            <li><a class="navigation" href="#"><span>Se connecter</span></a></li>
+        </ul>
+    </nav> <!-- navbar -->
+
+</header>
+{% block body %}{% endblock %}
+
+{% block javascripts %}{% endblock %}
+<div id="content">{% block content %}{% endblock %}</div>
+
+<div id="footer">
+    {% block footer %}
+        &copy; Copyright 2019 de<a href="#"> Jean Philippe</a>
+    {% endblock %}
+</div>
+</body>
+</html>
