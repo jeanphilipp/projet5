@@ -21,18 +21,18 @@ class Comment
      */
     private $content;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="comment", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $fkUser;
+
 
     /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
-    
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     */
+    private $user;
+
 
     public function getId(): ?int
     {
@@ -51,18 +51,6 @@ class Comment
         return $this;
     }
 
-    public function getFkUser(): ?User
-    {
-        return $this->fkUser;
-    }
-
-    public function setFkUser(User $fkUser): self
-    {
-        $this->fkUser = $fkUser;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -71,6 +59,18 @@ class Comment
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -59,24 +59,20 @@ class User
     private $admin;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Comment", mappedBy="fkUser", cascade={"persist", "remove"})
-     */
-    private $comment;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Cat", mappedBy="fkUser")
+     * @ORM\OneToMany(targetEntity="App\Entity\Cat", mappedBy="user")
      */
     private $cats;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="fkUser", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
      */
-    private $bookings;
+    private $comments;
 
     public function __construct()
     {
         $this->cats = new ArrayCollection();
-        $this->bookings = new ArrayCollection();
+
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,22 +176,6 @@ class User
         return $this;
     }
 
-    public function getComment(): ?Comment
-    {
-        return $this->comment;
-    }
-
-    public function setComment(Comment $comment): self
-    {
-        $this->comment = $comment;
-
-        // set the owning side of the relation if necessary
-        if ($comment->getFkUser() !== $this) {
-            $comment->setFkUser($this);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|Cat[]
@@ -209,7 +189,7 @@ class User
     {
         if (!$this->cats->contains($cat)) {
             $this->cats[] = $cat;
-            $cat->setFkUser($this);
+            $cat->setUser($this);
         }
 
         return $this;
@@ -220,39 +200,45 @@ class User
         if ($this->cats->contains($cat)) {
             $this->cats->removeElement($cat);
             // set the owning side to null (unless already changed)
-            if ($cat->getFkUser() === $this) {
-                $cat->setFkUser(null);
+            if ($cat->getUser() === $this) {
+                $cat->setUser(null);
             }
         }
 
         return $this;
     }
 
+
+
+
+
+
+
     /**
-     * @return Collection|Booking[]
+     * @return Collection|Comment[]
      */
-    public function getBookings(): Collection
+    public function getComments(): Collection
     {
-        return $this->bookings;
+        return $this->comments;
     }
 
-    public function addBooking(Booking $booking): self
+    public function addComment(Comment $comment): self
     {
-        if (!$this->bookings->contains($booking)) {
-            $this->bookings[] = $booking;
-            $booking->setFkUser($this);
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeBooking(Booking $booking): self
+    public function removeComment(Comment $comment): self
     {
-        if ($this->bookings->contains($booking)) {
-            $this->bookings->removeElement($booking);
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
             // set the owning side to null (unless already changed)
-            if ($booking->getFkUser() === $this) {
-                $booking->setFkUser(null);
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
             }
         }
 

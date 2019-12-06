@@ -30,12 +30,5 @@ class HomeController extends AbstractController
     {
         //return new Response("OK");
         return $this->render('quisommesnous.html.twig');
-
     }
-
-
-
-
-
-
 }

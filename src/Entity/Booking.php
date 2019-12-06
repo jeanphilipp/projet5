@@ -32,16 +32,10 @@ class Booking
     private $priceStay;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Cat", inversedBy="booking", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Cat", inversedBy="bookings", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="cat_id", referencedColumnName="id", nullable=false)
      */
-    private $fkCat;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="bookings")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $fkUser;
+    private $cat;
 
     public function getId(): ?int
     {
@@ -84,27 +78,16 @@ class Booking
         return $this;
     }
 
-    public function getFkCat(): ?Cat
+    public function getCat(): ?Cat
     {
-        return $this->fkCat;
+        return $this->cat;
     }
 
-    public function setFkCat(Cat $fkCat): self
+    public function setCat(Cat $cat): self
     {
-        $this->fkCat = $fkCat;
+        $this->cat = $cat;
 
         return $this;
     }
 
-    public function getFkUser(): ?User
-    {
-        return $this->fkUser;
-    }
-
-    public function setFkUser(?User $fkUser): self
-    {
-        $this->fkUser = $fkUser;
-
-        return $this;
-    }
 }

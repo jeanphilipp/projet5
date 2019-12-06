@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,14 +25,20 @@ class Cat
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="cats")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="user_id" ,referencedColumnName="id", nullable=false)
      */
-    private $fkUser;
+    private $user;
+
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Booking", mappedBy="fkCat", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="cat", orphanRemoval=true)
      */
-    private $booking;
+    private $bookings;
+
+    public function __construct()
+    {
+        $this->bookings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -49,30 +57,47 @@ class Cat
         return $this;
     }
 
-    public function getFkUser(): ?User
+    public function getUser(): ?User
     {
-        return $this->fkUser;
+        return $this->user;
     }
 
-    public function setFkUser(?User $fkUser): self
+    /**
+     * @param mixed $user
+     * @return Cat
+     */
+    public function setUser($user)
     {
-        $this->fkUser = $fkUser;
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setCat($this);
+        }
 
         return $this;
     }
 
-    public function getBooking(): ?Booking
+    public function removeBooking(Booking $booking): self
     {
-        return $this->booking;
-    }
-
-    public function setBooking(Booking $booking): self
-    {
-        $this->booking = $booking;
-
-        // set the owning side of the relation if necessary
-        if ($booking->getFkCat() !== $this) {
-            $booking->setFkCat($this);
+        if ($this->bookings->contains($booking)) {
+            $this->bookings->removeElement($booking);
+            // set the owning side to null (unless already changed)
+            if ($booking->getCat() === $this) {
+                $booking->setCat(null);
+            }
         }
 
         return $this;

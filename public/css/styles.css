@@ -3,16 +3,10 @@ html {
 }
 body {
     font: 200 1em/1.5em "Exo 2", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background: #FFFFFF;
-    color: #000000;
     margin: 0;
     padding: 0;
 }
-h1 {
-    font: 200 1.5em/1.5em "Exo 2", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #0e83a0;
-    font-weight: 600;
-}
+
 header .fullheight {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("../images/chat.png");
     background-repeat: no-repeat;
@@ -28,8 +22,8 @@ header .fullheight .hgroup {
     padding: 256px 0px;
 }
 header .fullheight .hgroup h1 {
-    color: #FFFFFF;
-    font-size: 5em;
+    color: #ffffff;
+    font-size: 4em;
     font-weight: 800;
     line-height: .8em;
     text-shadow: #000000 0 0 20px;
@@ -45,6 +39,7 @@ header .fullheight .hgroup p img {
 header #nav {
     background-color: #8a8d7e;
     background-size: 100%;
+    /* display:none; */
 }
 ul{
     margin: 0;
@@ -63,7 +58,4 @@ ul li a {
     color:#FFFFFF;
     text-decoration: none;
     font-size: 1.4em;
-}
-.qsn{
-    color: #473927;
 }
