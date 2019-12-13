@@ -31,7 +31,7 @@ class Cat
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="cat", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="cat", orphanRemoval=true, fetch="EAGER")
      */
     private $bookings;
 

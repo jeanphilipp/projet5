@@ -5,7 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Booking;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+/* use Symfony\Component\HttpFoundation\Response; */
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
@@ -24,11 +24,16 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/quisommesnous", name="about_us")
+     * @Route("/aboutus", name="about_us")
      */
     public function aboutUs()
     {
         //return new Response("OK");
-        return $this->render('quisommesnous.html.twig');
+        return $this->render('aboutus.html.twig');
     }
+    //continuer route ici
+
+
+
 }
+
