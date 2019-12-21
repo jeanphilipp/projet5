@@ -20,4 +20,5 @@ class CatType extends AbstractType
        'data_class' => Cat::class
        ));
    }
+
 }

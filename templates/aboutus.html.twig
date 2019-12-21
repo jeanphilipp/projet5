@@ -1,8 +1,34 @@
-{% extends "base.html.twig" %}
-{% block body %}{% endblock %}
-    {% block content %}
-        <div id="content">
-            <h1 class="qsn">Qui sommes-nous ?</h1>
-            <p class="important">Notre pension se situe etc ... </p>
-        </div>
-    {% endblock %}
+{% extends 'base.html.twig' %}
+{% block title %}Qui sommes-nous ?{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        {% block content %}
+
+            {#   dump() #}
+
+            <div class="row">
+                <p>Notre pension se situe dans un grand parc arboré.
+                    Chaque pensionnaire a un box personnalisé de 4 m2, avec un panier et des jouets.
+                    S'il le souhaite, votre chat pourra se rendre dans une grande salle où il pourra jouer avec ses
+                    congénères.
+                    De plus, s'il aime sortir, nous pouvons mettre à sa disposition un box avec une ouverture sur le
+                    jardin,
+                    qui est complètement
+                    clôturé et sécurisé.
+                </p>
+            </div>
+            {{ form(form) }}
+
+            {% for comment in comments %}
+            {{ dump(comment) }}
+
+            {% endfor %}
+
+        {% endblock %}
+    </div>
+{% endblock %}

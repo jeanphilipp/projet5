@@ -1,47 +1,38 @@
-html {
-    line-height: 1;
-}
-body {
-    font: 200 1em/1.5em "Exo 2", "Helvetica Neue", Helvetica, Arial, sans-serif;
+html, body {
     margin: 0;
     padding: 0;
+}
+body {
+   /* font-family:arial, sans-serif;*/
     background-color: #F6F7F9;
     color:#fff;
 }
+.container {
 
-header .fullheight {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("../images/chat.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-justify-content: center;
-    justify-content: center;
+   background-image: url("../images/chat.jpg");
+    background-repeat:no-repeat;
+    padding:0;
 }
-header .fullheight .hgroup {
-    padding: 256px 0px;
-}
-header .fullheight .hgroup h1 {
-    color: #ffffff;
+h1{
+    padding: 2em 0;
+    text-align: center;
+    font-style: italic;
     font-size: 4em;
-    font-weight: 800;
-    line-height: .8em;
-    text-shadow: #000000 0 0 20px;
-    text-align: center;
+    color:#fff;
+    text-shadow: #fff 0 0 20px;
 }
-header .fullheight .hgroup p {
-    text-align: center;
+nav {
+    background-color: #c7b79d;
 }
-header .fullheight .hgroup p img {
-    padding-top: 50px;
-    max-width: 50px;
+.navbar-brand{
+    color:#FFFFFF;
+    text-decoration: none;
+    font-size: 1.4em;
+   font-family: arial;
+color:#653512;
 }
-header #nav {
-    background-color: #8a8d7e;
-    background-size: 100%;
-    /* display:none; */
+.navbar-brand:hover{
+    color:#FFFFFF;
 }
 ul{
     margin: 0;
@@ -52,22 +43,15 @@ ul{
 ul li{
     list-style: none;
     padding: 20px;
+    text-align: center;
 }
-ul li:hover{
-    background-color: #473927;
+.menu{
+    display: none;
 }
-ul li a {
-    color:#FFFFFF;
-    text-decoration: none;
-    font-size: 1.4em;
-}
-#content{
-    width:60%;
-    margin: 10px auto;
-    padding:10px;
-    background-color: #8a8d7e;
-    box-shadow:0 0 20px rgba(0,0,0,0.8);
-    border-radius: 8px;
+.row{
+    margin: 0px auto;
+    padding: 50px;
+    background-color: #ae9782;
     text-align: center;
 }
 .main-content{
@@ -79,26 +63,41 @@ ul li a {
     font-size: 1.2em;
     line-height: 1.5;
 }
-.main-content-plus{
-    margin-top:0;
-    margin-bottom:0;
-    font-style: italic;
-    font-size:1.2em;
-    line-height: 1.5;
-}
-
-
-
-
 
 #footer{
-    background-color: #8a8d7e;
+    background-color: #c7b79d;
     background-size: 100%;
     text-align: center;
     padding:25px 0;
+    color:#653512;
+    font-weight: bold;
 }
 #footer a{
     text-decoration: none;
-    color:#fff;
+    color:#653512;
     font-style: italic;
+    font-weight: bold;
+}
+/************* MEDIA QUERIES ********************/
+@media screen and (max-width: 899px){
+    .menu{
+        display: block;
+        width:100%;
+        background: #000;
+        text-align: right;
+    }
+    .burger{
+        color:#fff;
+        margin-right: 25px;
+        font-size:40px;
+        cursor: pointer;
+    }
+    ul {
+        display:none;
+    }
+    .active {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }

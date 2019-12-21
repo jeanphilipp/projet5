@@ -4,43 +4,55 @@
     {% block head %}
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %} - Le Chat Botté</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+              crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     {% endblock %}
 </head>
 <body>
 
-<header id="intro">
-    <article class="fullheight">
-        <div class="hgroup">
-            <h1>Pension féline Le Chat Botté</h1>
-            <p><a href="{{ path('app_home_homepage') }}"><img src="images/arrow.png" alt="down arrow"></a></p>
-        </div>
-    </article>
-    <nav id="nav">
+<div class="container">
+
+    <h1>Pension féline Le Chat Botté</h1>
+    <nav class="nav justify-content-center text-uppercase font-weight-bold">
+     <div class="menu">
+         <span class="burger">&#9776;</span>
+     </div>
         <ul>
-            <li><a class="navigation" href="{{ path('app_home_homepage')}}"><span>Accueil</span></a></li>
-            <li><a class="navigation" href="{{ path('about_us') }}"><span>Qui sommes-nous ?</span></a></li>
-            <li><a class="navigation" href="#"><span>Réserver</span></a></li>
-            <li><a class="navigation" href="#"><span>Se connecter</span></a></li>
+            <li><a class="navbar-brand" href="{{ path('app_home_homepage') }}">Accueil</a></li>
+            <li><a class="navbar-brand" href="{{ path('about_us') }}">Qui sommes-nous ?</a></li>
+            <li><a class="navbar-brand" href="{{ path('reservation') }}">Réserver</a></li>
+            <li><a class="navbar-brand" href="{{ path('login') }}">Se connecter</a></li>
         </ul>
-    </nav> <!-- navbar -->
-
-</header>
+    </nav>
 
 
-{% block body %}
-{% endblock %}
+    <div class="row">
+         <div class="col-12">
+             {% block content %}{% endblock %}</div>
+         </div>
+    <div id="footer">
+        {% block footer %}
+            &copy; Copyright 2019 de<a href="#"> Jean-Philippe</a>
+        {% endblock %}
+    </div>
 
-
-<div id="content">{% block content %}{% endblock %}</div>
-
-<div id="footer">
-    {% block footer %}
-        &copy; Copyright 2019 de<a href="#"> Jean-Philippe</a>
+    {% block javascripts %}
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+                $('.burger').click(function() {
+                    $('ul').toggleClass('active');
+                })
+            })
+        </script>
     {% endblock %}
-</div>
 
-{% block javascripts %}{% endblock %}
+</div><!-- End .container -->
 </body>
 </html>

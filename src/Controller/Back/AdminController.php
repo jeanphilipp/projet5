@@ -4,7 +4,9 @@
 namespace App\Controller\Back;
 
 
-class AdminController
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class AdminController extends AbstractController
 {
 
 }

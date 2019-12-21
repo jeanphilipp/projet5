@@ -12,7 +12,7 @@ class CatController extends AbstractController
 {
     public function listingCats()
     {
-//findAll
+      //findAll
     }
 
     /**
@@ -20,9 +20,9 @@ class CatController extends AbstractController
      */
     public function show(int $id)
     {
-//dump($id);die;
+        //dump($id);die;
         $cat = $this->getDoctrine()->getRepository(Cat::class)->find($id);
-       // dump($cat);die;
+         dump($cat);die;
         return $this->render('back/cat/show.html.twig', [
             'cat' => $cat
         ]);
@@ -31,8 +31,9 @@ class CatController extends AbstractController
 
     public function create()
     {
-//
+// ici a travailler appeler form avec catype
     }
+
 
     public function edit()
     {
