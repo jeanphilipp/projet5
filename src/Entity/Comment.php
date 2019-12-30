@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  */
@@ -21,8 +19,6 @@ class Comment
      */
     private $content;
 
-
-
     /**
      * @ORM\Column(type="datetime")
      */
@@ -32,7 +28,6 @@ class Comment
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      */
     private $user;
-
 
     public function getId(): ?int
     {
@@ -47,7 +42,6 @@ class Comment
     public function setContent(string $content): self
     {
         $this->content = $content;
-
         return $this;
     }
 

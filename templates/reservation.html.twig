@@ -5,6 +5,13 @@
 {% endblock %}
 
     {% block content %}
+        <p>Reservation</p>
 
-        <p>Réserver ici</p>
+        {% for booking in bookings %}
+            <p>Réservation du {{ booking.startDate |date('d-m-Y')}} au {{ booking.exitDate |date('d-m-Y')}} pour votre chat : xxx</p>
+            <br>
+        {% endfor %}
+
+        {{ form(form) }}
+
     {% endblock %}

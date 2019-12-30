@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\Booking;
 use App\Entity\Comment;
+use App\Form\BookingType;
 use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,14 +16,10 @@ class HomeController extends AbstractController
      */
     public function homepage()
     {
-        $bookings = $this->getDoctrine()->getRepository(Booking::class)->findAll();
+        //$bookings = $this->getDoctrine()->getRepository(Booking::class)->findAll();
         //dump($bookings);
-        return $this->render('home.html.twig', [
-            'bookings' => $bookings,
-
-        ]);
+        return $this->render('home.html.twig');
     }
-
     /**
      * @Route("/aboutus", name="about_us")
      */
@@ -31,7 +27,6 @@ class HomeController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $comments = $entityManager->getRepository(Comment::class)->findAll();
-
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -42,23 +37,40 @@ class HomeController extends AbstractController
 
             return $this->redirectToRoute('about_us');
         }
-
-
         return $this->render('aboutus.html.twig',
             [
                 'form' => $form->createView(),
                 'comments' => $comments,
-
             ]);
-
     }
-
     /**
      * @Route("/reservation", name="reservation")
      */
-    public function booking()
+    public function booking(Request $request)
     {
-        return $this->render('reservation.html.twig');
+        $entityManager = $this->getDoctrine()->getManager();
+        $bookings = $entityManager->getRepository(Booking::class)->findAll();
+        $booking = new Booking();
+        $form = $this->createForm(BookingType::class, $booking);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+           $interval = date_diff($booking->getStartDate(), $booking->getExitDate());
+            $nb_jours = (int)$interval->format('%R%a');
+           //dump($nb_jours);die;
+            $booking->setPriceStay($nb_jours * 10);
+
+            $entityManager->persist($booking);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('reservation');
+        }
+
+        return $this->render('reservation.html.twig', [
+
+            'form' => $form->createView(),
+            'bookings' => $bookings]);
     }
 
     /**

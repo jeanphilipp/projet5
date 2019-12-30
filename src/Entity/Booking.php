@@ -47,9 +47,9 @@ class Booking
         return $this->startDate;
     }
 
-    public function setStarDate(\DateTimeInterface $sartdate): self
+    public function setStartDate(\DateTimeInterface $startdate): self
     {
-        $this->startDate = $sartdate;
+        $this->startDate = $startdate;
 
         return $this;
     }

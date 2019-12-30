@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
+{% block title %}Les réservations{% endblock %}
+{#% block body %#}
 
-{% block body %}
-
-    {{ dump() }}
-    {% for booking in cat.bookings %}
-    {{ dump(booking) }}
-    {% endfor %}
-{% endblock %}
+    {# dump()}
+    {% block content %}
+        {% for booking in cat.bookings %}
+        {% for cat in cats %}
+        {{ dump(booking) }
+            {{ cat.id }}
+        {% endfor %}
+    {% endblock %}
+{% endblock %#}
+   {% block content %} {{ cat.catName }}  {% endblock %}
