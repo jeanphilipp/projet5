@@ -12,22 +12,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BookingType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('cat')
+        $builder->add('cat',null, array('label' => 'Votre chat :'))
             ->add('startDate', DateType::class,
-            [
-                // renders it as a single text box
-                'widget' => 'single_text',
-            ])
+                [
+                    // renders it as a single text box
+                    'widget' => 'single_text',
+                ])
             ->add('exitDate', DateType::class,
                 [
                     'widget' => 'single_text',
                 ])
             ->add('Envoyer', SubmitType::class);
     }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

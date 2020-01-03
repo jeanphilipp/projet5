@@ -176,7 +176,6 @@ class User
         return $this;
     }
 
-
     /**
      * @return Collection|Cat[]
      */
@@ -191,7 +190,6 @@ class User
             $this->cats[] = $cat;
             $cat->setUser($this);
         }
-
         return $this;
     }
 
@@ -204,15 +202,8 @@ class User
                 $cat->setUser(null);
             }
         }
-
         return $this;
     }
-
-
-
-
-
-
 
     /**
      * @return Collection|Comment[]
@@ -241,16 +232,13 @@ class User
                 $comment->setUser(null);
             }
         }
-
         return $this;
     }
 
-/* Ajout vision pour transformer entite */
+    /* Ajout visio pour transformer entite */
     public function __toString()
     {
         // TODO: Implement __toString() method.
         return $this->getName();
     }
-
-
 }
