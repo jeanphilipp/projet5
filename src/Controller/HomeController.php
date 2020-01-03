@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 use App\Entity\Booking;
 use App\Entity\Comment;
@@ -16,8 +15,6 @@ class HomeController extends AbstractController
      */
     public function homepage()
     {
-        //$bookings = $this->getDoctrine()->getRepository(Booking::class)->findAll();
-        //dump($bookings);
         return $this->render('home.html.twig');
     }
     /**
@@ -60,13 +57,10 @@ class HomeController extends AbstractController
             $nb_jours = (int)$interval->format('%R%a');
            //dump($nb_jours);die;
             $booking->setPriceStay($nb_jours * 10);
-
             $entityManager->persist($booking);
             $entityManager->flush();
-
             return $this->redirectToRoute('reservation');
         }
-
         return $this->render('reservation.html.twig', [
 
             'form' => $form->createView(),

@@ -99,11 +99,8 @@ class Cat
                 $booking->setCat(null);
             }
         }
-
         return $this;
     }
-
-
 
     public function __toString()
     {

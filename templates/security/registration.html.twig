@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        {% block content %}
+            <div class="row">
+                <div class="col-12">
+                    <p>Inscription</p>
+                   {% if errors|length > 0 %}
+                         {% for error in errors %}
+                             <p>{{ error }}</p>
+                         {% endfor %}
+                    {% endif %}
+
+                    {{ form_start(form) }}
+
+{{ form_row(form.pseudo,{'label':'Votre pseudo','attr': {'placeholder':'Votre pseudo'}}) }}
+                    {{ form_row(form.email,{'label':'Votre émail','attr': {'placeholder':'Votre émail'}}) }}
+                    {{ form_row(form.password,{'label':'Votre mot de passe','attr': {'placeholder':'Votre mot de passe'}}) }}
+                    {{ form_row(form.confirm_password,{'label':'Confirmation mot de passe','attr': {'placeholder':'Répétez votre mot de passe'}}) }}
+                    <button type="submit" class="btn btn-success">Inscription</button>
+                    {{ form_end(form) }}
+
+
+                </div>
+            </div>
+
+
+        {% endblock %}
+    </div>
+{% endblock %}

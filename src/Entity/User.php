@@ -1,16 +1,23 @@
 <?php
 
 namespace App\Entity;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -19,32 +26,33 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     private $pseudo;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $address;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\Email(message = " Cet email '{{ value }}' n'est pas valide !")
      */
     private $email;
 
@@ -53,10 +61,12 @@ class User
      */
     private $password;
 
+    public $confirm_password;
+
     /**
      * @ORM\Column(type="boolean")
      */
-    private $admin;
+    private $admin = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Cat", mappedBy="user")
@@ -240,5 +250,52 @@ class User
     {
         // TODO: Implement __toString() method.
         return $this->getName();
+    }
+
+//Ajout ci-dessous pour le composant security
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using bcrypt or argon
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }
