@@ -24,13 +24,13 @@
             <li><a class="navbar-brand" href="{{ path('app_home_homepage') }}">Accueil</a></li>
             <li><a class="navbar-brand" href="{{ path('about_us') }}">Qui sommes-nous ?</a></li>
             <li><a class="navbar-brand" href="{{ path('reservation') }}">Réserver</a></li>
-            <li><a class="navbar-brand" href="{{ path('login') }}">Se connecter</a></li>
+            <li><a class="navbar-brand" href="{{ path('app_login') }}">Se connecter</a></li>
         </ul>
     </nav>
 
     <div class="row">
-        <div class="col-12">
-            {% block content %}ici{% endblock %}
+        <div class="col-lg-8 offset-2">
+            {% block content %}{% endblock %}
         </div>
     </div>
 

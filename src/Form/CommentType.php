@@ -11,16 +11,22 @@ class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /*  $builder
+              ->add('content', TextareaType::class, [
+                  'attr' => [
+                      'placeholder' => "Ecrivez votre avis ici"
+                  ]
+              ])
+              ->add('Envoyer', SubmitType::class, [
+                  'attr' => ['class' => 'btn btn-secondary'],
+              ]);
+      }*/
+
+
         $builder
-            ->add('content', TextareaType::class, [
-                'attr' => [
-                    'placeholder' => "Ecrivez votre avis ici"
-                ]
-            ])
-            ->add('Envoyer', SubmitType::class, [
-                'attr' => ['class' => 'btn btn-secondary'],
-            ]);
+            ->add('content');
     }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

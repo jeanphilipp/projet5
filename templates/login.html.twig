@@ -1,10 +1,31 @@
 {% extends 'base.html.twig' %}
-{% block title %}Qui sommes-nous ?{% endblock %}
+{% block title %}Connectez-vous{% endblock %}
 {% block head %}
     {{ parent() }}
 {% endblock %}
 
+{% block body %}
+<div class="container">
     {% block content %}
+        <div class="row">
+            <div class="col-12">
 
-        <p>Se connecter ici</p>
+        <p class="h4"><a class="btn btn-secondary" href="{{ path('security_registration') }}">Créer votre compte</a></p>
+
+
+        {{ form_start(form) }}
+        {{ form_row(form.pseudo,{'label':'Pseudo','attr': {'placeholder':'Votre pseudo'}}) }}
+        {{ form_row(form.password,{'label':'Mot de passe','attr': {'placeholder':'Votre mot de passe'}}) }}
+       <!-- <button type="submit" class="btn btn-secondary">Se connecter</button>  -->
+                <p class="h4"><a class="btn btn-secondary" href="{{ path('login') }}">Se connecter</a></p>
+        {{ form_end(form) }}
+
+            </div>
+        </div>
     {% endblock %}
+
+
+</div>
+{% endblock %}
+
+

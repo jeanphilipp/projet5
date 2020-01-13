@@ -5,10 +5,22 @@
 {% endblock %}
 
     {% block content %}
-        <p>Reservation</p>
+        <p class="h4">Réservation</p>
         {% for booking in bookings %}
             <p>Réservation du {{ booking.startDate |date('d-m-Y') }} au {{ booking.exitDate |date('d-m-Y') }} pour votre
                 chat : xxx</p>
         {% endfor %}
         {{ form(form) }}
+
+        {# { form_start(form) }}
+        {{ form_row(form.cat,{'label':'Nom du chat','attr': {'placeholder':'Ecrivez le nom de votre chat ici'}}) }}
+        {{ form_row(form.startDate,{'label':'Date entrée','attr': {'placeholder':'Date d\'entrée'}}) }}
+        {{ form_row(form.exitDate,{'label':'Date sortie','attr': {'placeholder':'Date de sortie'}}) }#}
+
+       <!-- <button type="submit" class="btn btn-secondary">Confirmer</button>
+        <button type="submit" class="btn btn-secondary">Modifier</button>
+        <button type="submit" class="btn btn-secondary">Supprimer</button>
+
+        {# { form_end(form) } #}
+
     {% endblock %}

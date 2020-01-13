@@ -2,6 +2,7 @@
 namespace App\Controller;
 use App\Entity\Booking;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Form\BookingType;
 use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +25,9 @@ class HomeController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $comments = $entityManager->getRepository(Comment::class)->findAll();
+
         $comment = new Comment();
+
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -70,9 +73,9 @@ class HomeController extends AbstractController
     /**
      * @Route("/login", name="login")
      */
-    public function loginUser()
+    /*public function loginUser()
     {
         return $this->render('login.html.twig');
-    }
+    }*/
 }
 

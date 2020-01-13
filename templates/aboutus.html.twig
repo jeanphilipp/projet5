@@ -41,8 +41,10 @@
 
             {% endfor %}
         </ul>
-        <p id="span_comment" class="btn btn-secondary">Donner un avis</p>
-        {{ form(form) }}
+        {{ form_start(form) }}
+        {{ form_row(form.content,{'label':'Avis','attr': {'placeholder':'Ecrivez votre avis ici'}}) }}
+        <button type="submit" class="btn btn-secondary">Envoyer</button>
+        {{ form_end(form) }}
 
         </div>
 
