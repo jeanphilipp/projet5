@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\LoginType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -19,19 +20,26 @@ class SecurityController extends AbstractController
     /**
      * @Route("/registration", name="security_registration")
      */
-    public function registration(Request $request)
+    public function registration(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $errors = [];
 
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
+        $message = "";
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //Ajout JP hors visio
+            $hash  = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
-            // $message = "Félicitation, votre compte a été créé !";
             try {
                 $entityManager->flush();
+                 $message = "Félicitation, votre compte a été créé ! Vous pouvez vous connecter.";
+
 
             } catch (UniqueConstraintViolationException $e) {
                 $errors[] = "Ce pseudo a déja été utilisé !";
@@ -40,23 +48,7 @@ class SecurityController extends AbstractController
         return $this->render('security/registration.html.twig', [
             'form' => $form->createView(),
             'errors' => $errors,
-            //'message' => $message,
-        ]);
-
-    }
-
-    /**
-     * @Route("/login2", name="login2")
-     */
-    public function login2(Request $request)
-    {
-        $errors = [];
-        $user = new User();
-        $form = $this->createForm(LoginType::class, $user);
-        $form->handleRequest($request);
-        return $this->render('login.html.twig', [
-            'form' => $form->createView(),
-            'errors' => $errors,
+            'message' => $message
         ]);
 
     }
@@ -70,11 +62,11 @@ class SecurityController extends AbstractController
         //     return $this->redirectToRoute('target_path');
         // }
 
+
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 

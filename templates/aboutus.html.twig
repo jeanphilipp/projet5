@@ -8,9 +8,7 @@
 
     <div class="container">
     {% block content %}
-
         {#   dump() #}
-
         <div class="row">
             <div class="col-12">
                 <p>Notre pension se situe dans un grand parc arboré.
@@ -33,21 +31,19 @@
         <ul class="avis">
             {% for comment in comments %}
                 {# dump(comment) }#}
-
                 <li class="liste-avis text-left">
                     {{ comment.content }}<p class="small">Posté par : {{ comment.user }}
                         le {{ comment.createdAt|date('d-m-Y') }}</p>
                 </li>
-
             {% endfor %}
         </ul>
+
         {{ form_start(form) }}
         {{ form_row(form.content,{'label':'Avis','attr': {'placeholder':'Ecrivez votre avis ici'}}) }}
         <button type="submit" class="btn btn-secondary">Envoyer</button>
         {{ form_end(form) }}
 
         </div>
-
     {% endblock %}
     </div>
 {% endblock %}

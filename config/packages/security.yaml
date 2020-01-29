@@ -1,4 +1,7 @@
 security:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         #in_memory: { memory: null }
@@ -32,4 +35,5 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         # require ROLE_ADMIN for /admin*
-        #- { path: '^/', roles: ROLE_USER }
+        - { path: '^/cats/create', roles: ROLE_USER }
+

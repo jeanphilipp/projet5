@@ -16,6 +16,7 @@ class CatController extends AbstractController
     public function listingCats()
     {
       //findAll
+        return $this->render('back/cat/list.html.twig');
     }
 
     /**
@@ -29,7 +30,6 @@ class CatController extends AbstractController
         return $this->render('back/cat/show.html.twig', [
             'cat' => $cat
         ]);
-
     }
 
     /**
@@ -59,9 +59,23 @@ class CatController extends AbstractController
     /**
      * @Route("/admin/cats/edit/{id}")
      */
-    public function edit()
+    public function edit(Request $request, int $id)
     {
+        //find(id)
+        $entityManager = $this->getDoctrine()->getManager();
+        $cat = $entityManager->getRepository(Cat::class)->find($id);
+        $form = $this->createForm(CatType::class, $cat);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($cat);
+            $entityManager->flush();
 
+            return $this->redirectToRoute('admin_list_cats');
+        }
+        return $this->render('back/cat/new.html.twig',
+            [
+                'form' => $form->createView(),
+            ]);
     }
 
     /**

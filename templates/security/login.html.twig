@@ -3,26 +3,42 @@
 {% block title %}Log in!{% endblock %}
 
 {% block content %}
-<form method="post">
+
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
     {% if app.user %}
         <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            Vous êtes connecté en tant que {{ app.user.username }} <a class="btn btn-secondary"
+                                                                      href="{{ path('app_logout') }}">Déconnexion</a>
         </div>
+    {% else %}
+
+        <form method="post">
+            <label for="inputPseudo">Pseudo</label>
+            <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control"
+                   placeholder="Votre pseudo" required autofocus>
+            <label for="inputPassword">Password</label>
+            <input type="password" name="password" id="inputPassword" class="form-control"
+                   placeholder="Votre mot de passe"
+                   required>
+
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}">
+
+            <br>
+            <button class="btn btn-secondary" type="submit">
+                Connectez-vous
+            </button>
+            ou
+            <span class="h4"><a class="btn btn-secondary"
+                                href="{{ path('security_registration') }}">Créer votre compte</a></span>
+
+        </form>
+
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputPseudo">Pseudo</label>
-    <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
 
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
@@ -35,8 +51,7 @@
         </div>
     #}
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+    <br>
+
+
 {% endblock %}

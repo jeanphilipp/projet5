@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block title %}Qui sommes-nous ?{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+    {% block content %}
+      <span> Pour inscrire un nouveau chat : <a class="btn btn-secondary" href="{{ path('app_home_create') }}" role="button">Cliquez ici</a></span>
+
+        <hr>
+        <p class="h5">Réservation pour chat déjà inscrits :</p>
+        {% for booking in bookings %}
+                <p>Vous avez réservé du {{ booking.startDate |date('d-m-Y') }} au {{ booking.exitDate |date('d-m-Y') }} pour votre
+                chat
+                    {% for cat in cats %}
+                        {{ cat.catName }}
+                    {% endfor %} </p>
+            <a href="#">Modifier</a>
+            <a href="#">Supprimer</a>
+        {% endfor %}
+
+        {{ form_start(form) }}
+           {{ form_row(form.cat,{'label':'Nom du chat'}) }}
+           {{ form_row(form.startDate,{'label':'Date d\'entrée'}) }}
+           {{ form_row(form.exitDate,{'label':'Date de sortie'}) }}
+        {{ form_end(form) }}
+
+    {% endblock %}

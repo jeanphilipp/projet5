@@ -13,7 +13,7 @@
     {% endblock %}
 </head>
 <body>
-
+{#{ dump() } #}
 <div class="container">
     <h1>Pension féline Le Chat Botté</h1>
     <nav class="nav justify-content-center text-uppercase font-weight-bold">
@@ -23,8 +23,12 @@
         <ul>
             <li><a class="navbar-brand" href="{{ path('app_home_homepage') }}">Accueil</a></li>
             <li><a class="navbar-brand" href="{{ path('about_us') }}">Qui sommes-nous ?</a></li>
-            <li><a class="navbar-brand" href="{{ path('reservation') }}">Réserver</a></li>
-            <li><a class="navbar-brand" href="{{ path('app_login') }}">Se connecter</a></li>
+            <li><a class="navbar-brand" href="{{ path('booking') }}">Réserver</a></li>
+            {% if app.user %}
+                <li><a class="navbar-brand" href="{{ path('app_logout') }}">Deconnexion</a></li>
+            {% else %}
+                <li><a class="navbar-brand" href="{{ path('app_login') }}">Se connecter</a></li>
+            {% endif %}
         </ul>
     </nav>
 

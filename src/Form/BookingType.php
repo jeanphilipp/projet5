@@ -19,7 +19,7 @@ class BookingType extends AbstractType
             ->add('cat', EntityType::class, array(
                 'label' => 'Votre chat :',
                 'class' => Cat::class,
-                'choice_label' => 'id',
+                'choice_label' => 'catName',
             ))
             ->add('startDate', DateType::class,
                 [
@@ -35,13 +35,6 @@ class BookingType extends AbstractType
             ->add('Envoyer', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-secondary'],
             ]);
-
-        /* $builder  (demander pquoi je ne peux pas ajouter un chat sans a avoir a le selectionner ds un menu deroulant)
-             ->add('catName')
-             ->add('startDate', DateType::class,
-                 ['widget' => 'single_text',])
-             ->add('exitDate', DateType::class,
-                 ['widget' => 'single_text',]);*/
     }
 
     public function configureOptions(OptionsResolver $resolver)
