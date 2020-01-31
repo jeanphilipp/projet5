@@ -78,6 +78,9 @@ class Booking
         return $this;
     }
 
+
+
+
     public function getCat(): ?Cat
     {
         return $this->cat;
@@ -89,5 +92,7 @@ class Booking
 
         return $this;
     }
+
+
 
 }

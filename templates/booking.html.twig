@@ -10,11 +10,15 @@
         <hr>
         <p class="h5">Réservation pour chat déjà inscrits :</p>
         {% for booking in bookings %}
-                <p>Vous avez réservé du {{ booking.startDate |date('d-m-Y') }} au {{ booking.exitDate |date('d-m-Y') }} pour votre
-                chat
-                    {% for cat in cats %}
+
+                <p>Réservation du {{ booking.startDate |date('d-m-Y') }} au {{ booking.exitDate |date('d-m-Y') }} pour
+            {% for cat in cats %}
+
                         {{ cat.catName }}
-                    {% endfor %} </p>
+                    {% endfor %}
+
+
+            - Prix du sejour : {{ booking.priceStay }}</p>
             <a href="#">Modifier</a>
             <a href="#">Supprimer</a>
         {% endfor %}

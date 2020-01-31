@@ -13,13 +13,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BookingType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        dump($_SESSION); die;
         $builder
             ->add('cat', EntityType::class, array(
                 'label' => 'Votre chat :',
                 'class' => Cat::class,
                 'choice_label' => 'catName',
+
             ))
             ->add('startDate', DateType::class,
                 [

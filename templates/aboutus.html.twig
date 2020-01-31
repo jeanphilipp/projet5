@@ -25,6 +25,7 @@
         <hr>
         <div class="row ">
             <div class="col-12">
+
                 <p class="text-left font-weight-bold">({{ comments|length }}) avis :</p>
             </div>
         </div>
@@ -32,16 +33,23 @@
             {% for comment in comments %}
                 {# dump(comment) }#}
                 <li class="liste-avis text-left">
-                    {{ comment.content }}<p class="small">Posté par : {{ comment.user }}
+                    {{ comment.content }}<p class="small">Posté par {{ app.user.pseudo}}
                         le {{ comment.createdAt|date('d-m-Y') }}</p>
                 </li>
             {% endfor %}
         </ul>
 
-        {{ form_start(form) }}
-        {{ form_row(form.content,{'label':'Avis','attr': {'placeholder':'Ecrivez votre avis ici'}}) }}
-        <button type="submit" class="btn btn-secondary">Envoyer</button>
-        {{ form_end(form) }}
+        {% if app.user %}
+            {{ form_start(form) }}
+            {{ form_row(form.content,{'label':'Avis','attr': {'placeholder':'Ecrivez votre avis ici'}}) }}
+            <button type="submit" class="btn btn-secondary">Envoyer</button>
+            {{ form_end(form) }}
+        {% else %}
+            <span>Si vous souhaitez poster un avis, vous devez &nbsp;<a class="btn btn-secondary"  role="button" href="{{ path('app_login') }}"> vous connecter</a></span>
+
+
+
+        {% endif %}
 
         </div>
     {% endblock %}

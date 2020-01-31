@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Booking;
 use App\Entity\Cat;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Form\BookingType;
 use App\Form\CatType;
 use App\Form\CommentType;
@@ -31,6 +32,7 @@ class HomeController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $comments = $entityManager->getRepository(Comment::class)->findAll();
         $comment = new Comment();
+        $user = new User();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,7 +44,8 @@ class HomeController extends AbstractController
         return $this->render('aboutus.html.twig',
             [
                 'form' => $form->createView(),
-                'comments' => $comments
+                'comments' => $comments,
+                'user' => $user
             ]);
     }
 

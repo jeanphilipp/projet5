@@ -2,7 +2,9 @@
 
 namespace App\Controller\Back;
 
+use App\Entity\Booking;
 use App\Entity\Cat;
+use App\Entity\User;
 use App\Form\CatType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +18,15 @@ class CatController extends AbstractController
     public function listingCats()
     {
       //findAll
-        return $this->render('back/cat/list.html.twig');
+        $cats = $this->getDoctrine()->getRepository(Cat::class)->findAll();
+        //ajout recuperer les users
+       /* $pseudo =$this->getDoctrine()->getRepository(User::class)->findAll();*/
+        $bookings = $this->getDoctrine()->getRepository(Booking::class)->findAll();
+       // $booking = new Booking();
+        return $this->render('back/cat/list.html.twig',[
+            'cats' => $cats,
+            'bookings' => $bookings,
+        ]);
     }
 
     /**

@@ -257,11 +257,11 @@ class User implements UserInterface
     }
 
     /* Ajout visio pour transformer entite */
-    public function __toString()
+   public function __toString()
     {
         // TODO: Implement __toString() method.
-        return $this->getName();
-    }
+      return $this->getName();
+   }
 
 //Ajout ci-dessous pour le composant security
     /**

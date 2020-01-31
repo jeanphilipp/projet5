@@ -1,2 +1,47 @@
 {# afficher liste des chats#}
-<h1>TEST Afficher liste chat : test jp</h1>
+{% extends 'base.html.twig' %}
+{% block title %}Administration{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{#%  block body %#}
+    {#{ dump(bookings) }#}
+    {# % for booking in bookings %#}
+        {#{ booking.id }#}
+    {#% endfor %#}
+{#%  endblock %#}
+    {% block content %}
+        {#{ dump(cats) } #}
+        <table class="table table-bordered table-striped table-condensed">
+            <thead>
+            <tr>
+                <th>Nom du chat</th>
+                <th>Propriétaire</th>
+                <th>Debut Bookings</th>
+                <th>Prix du séjour</th>
+            </tr>
+            </thead>
+
+            {% for cat in cats %}
+                <tr>
+                    <td>{{ cat.catName }}</td>
+                    <td>{{ cat.user.pseudo }}</td>
+                    <td>{% for booking in cat.bookings %}
+                            {# @var booking \App\Entity\Booking #}
+                            {#{ dump(booking) }#}
+                            <p>Du {{ booking.startDate|date("d/m/Y") }} AU {{ booking.exitDate|date("d/m/Y") }}</p>
+                        {% endfor %}</td>
+
+                    <td>
+                        {% for booking in cat.bookings %}
+                            <p> {{ booking.priceStay }} euros</p>
+
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+
+
+        </table>
+    {% endblock %}
+
