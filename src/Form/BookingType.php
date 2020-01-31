@@ -16,7 +16,7 @@ class BookingType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        dump($_SESSION); die;
+        //dump($_SESSION); die;
         $builder
             ->add('cat', EntityType::class, array(
                 'label' => 'Votre chat :',
