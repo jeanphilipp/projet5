@@ -1,16 +1,11 @@
 <?php
-
 namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-
-
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(
@@ -92,7 +87,6 @@ class User implements UserInterface
     public function __construct()
     {
         $this->cats = new ArrayCollection();
-
         $this->comments = new ArrayCollection();
     }
 
@@ -109,7 +103,6 @@ class User implements UserInterface
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
-
         return $this;
     }
 
@@ -121,7 +114,6 @@ class User implements UserInterface
     public function setFirstName(string $firstname): self
     {
         $this->firstName = $firstname;
-
         return $this;
     }
 
@@ -133,7 +125,6 @@ class User implements UserInterface
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -145,7 +136,6 @@ class User implements UserInterface
     public function setAddress(string $address): self
     {
         $this->address = $address;
-
         return $this;
     }
 
@@ -157,7 +147,6 @@ class User implements UserInterface
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
-
         return $this;
     }
 
@@ -169,7 +158,6 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -181,7 +169,6 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -193,7 +180,6 @@ class User implements UserInterface
     public function setAdmin(bool $admin): self
     {
         $this->admin = $admin;
-
         return $this;
     }
 

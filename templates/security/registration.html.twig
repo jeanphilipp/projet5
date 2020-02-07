@@ -1,13 +1,9 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Créez votre compte{% endblock %}
 {% block head %}
     {{ parent() }}
 {% endblock %}
-
 {% block body %}
-
-
     <div class="container">
         {% block content %}
             <div class="row">
@@ -18,7 +14,6 @@
                              <p>{{ error }}</p>
                          {% endfor %}
                     {% endif %}
-
                     {{ form_start(form) }}
                        {{ form_row(form.pseudo,{'label':'Pseudo','attr': {'placeholder':'Votre pseudo'}}) }}
                        {{ form_row(form.email,{'label':'Email','attr': {'placeholder':'Votre email'}}) }}
@@ -27,7 +22,6 @@
                     <button type="submit" class="btn btn-secondary">S'incrire</button>
                     {{ form_end(form) }}
                     {{ message }}
-
                 </div>
             </div>
         {% endblock %}

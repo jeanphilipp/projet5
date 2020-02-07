@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Form;
-
 use App\Entity\Booking;
 use App\Entity\Cat;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -10,10 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 class BookingType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         //dump($_SESSION); die;

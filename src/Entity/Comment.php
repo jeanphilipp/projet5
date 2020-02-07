@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 /**
@@ -53,7 +52,6 @@ class Comment
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 
@@ -65,7 +63,6 @@ class Comment
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
 }

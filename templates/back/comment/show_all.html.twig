@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block title %}Administration{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+ {% block content %}
+     <table class="table table-bordered table-striped table-condensed">
+         <thead>
+         <tr>
+             <th>Avis</th>
+             <th>Pseudo</th>
+         </tr>
+         </thead>
+         {% for comment in comments %}
+             <tr>
+                 <td>{{ comment.content}}</td>
+                 <td>pseudo</td>
+                 <td><a href="{{ path('app_comment_delete', {id:comment.id}) }}">Supprimer</a></td>
+             </tr>
+         {% endfor %}
+     </table>
+ {% endblock %}

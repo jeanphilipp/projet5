@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Security;
-
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,13 +20,10 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
-
     private $entityManager;
     private $urlGenerator;
     private $csrfTokenManager;
-
     private $passwordEncoder;
-
     public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator,
                                 CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {

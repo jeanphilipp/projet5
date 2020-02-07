@@ -13,7 +13,6 @@
     {% endblock %}
 </head>
 <body>
-{#{ dump() } #}
 <div class="container">
     <h1>Pension féline Le Chat Botté</h1>
     <nav class="nav justify-content-center text-uppercase font-weight-bold">
@@ -31,7 +30,6 @@
             {% endif %}
         </ul>
     </nav>
-
     <div class="row">
         <div class="col-lg-8 offset-2">
             {% block content %}{% endblock %}
@@ -54,7 +52,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
                 integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
                 crossorigin="anonymous"></script>
-
         <script src="{{ asset('js/menu.js') }}"></script>
     {% endblock %}
 </div><!-- End .container -->

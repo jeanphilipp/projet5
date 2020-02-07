@@ -1,19 +1,15 @@
 <?php
-
 namespace App\Controller;
-
 use App\Entity\Booking;
 use App\Entity\Cat;
 use App\Entity\Comment;
-use App\Entity\User;
 use App\Form\BookingType;
 use App\Form\CatType;
 use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Security\Core\Security;
 class HomeController extends AbstractController
 {
     /**
@@ -27,15 +23,20 @@ class HomeController extends AbstractController
     /**
      * @Route("/aboutus", name="about_us")
      */
-    public function aboutUs(Request $request)
+    public function aboutUs(Request $request, Security $security)
     {
+        //dump($security->getUser());
         $entityManager = $this->getDoctrine()->getManager();
         $comments = $entityManager->getRepository(Comment::class)->findAll();
         $comment = new Comment();
-        $user = new User();
+        //Ajout composant user = Security
+        $user = $security->getUser();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            //user connecté !!
+            $comment->setUser($user);
             $comment->setCreatedAt(new \DateTime());
             $entityManager->persist($comment);
             $entityManager->flush();
@@ -49,7 +50,6 @@ class HomeController extends AbstractController
             ]);
     }
 
-
     /**
      * @Route("/booking", name="booking")
      */
@@ -59,17 +59,11 @@ class HomeController extends AbstractController
         $bookings = $entityManager->getRepository(Booking::class)->findAll();
         $cats = $entityManager->getRepository(Cat::class)->findAll();
         $booking = new Booking();
-
-       // $cat = new Cat();
-
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-
             $interval = date_diff($booking->getStartDate(), $booking->getExitDate());
             $nb_jours = (int)$interval->format('%R%a');
-            //dump($nb_jours);die;
             $booking->setPriceStay($nb_jours * 10);
             $entityManager->persist($booking);
             $entityManager->flush();
@@ -88,9 +82,7 @@ class HomeController extends AbstractController
      */
     public function create(Request $request)
     {
-       // dump($this->getUser()->getId()); die;
         $entityManager = $this->getDoctrine()->getManager();
-
         $cat = new Cat();
         $form = $this->createForm(CatType::class, $cat);
         $form->handleRequest($request);
@@ -99,7 +91,6 @@ class HomeController extends AbstractController
             //ne pas oublier
             $cat->setUser($this->getUser());
             $entityManager->persist($cat);
-
             $entityManager->flush();
             return $this->redirectToRoute('booking');
         }
@@ -109,5 +100,20 @@ class HomeController extends AbstractController
             ]);
     }
 
+    /**
+     * @Route("/booking/delete/{id}", name="app_booking_delete")
+     */
+    public function delete(int $id)
+    {
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+            $booking = $entityManager->getRepository(Booking::class)->find($id);
+            if ($booking instanceof Booking) {
+                $entityManager->remove($booking);
+                $entityManager->flush();
+            }
+            return $this->redirectToRoute('booking');
+        }
+    }
 }
 

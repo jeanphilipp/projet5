@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Entity;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,7 +27,6 @@ class Cat
      */
     private $user;
 
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="cat", orphanRemoval=true, fetch="EAGER")
      */
@@ -53,7 +50,6 @@ class Cat
     public function setCatName(string $catname): self
     {
         $this->catName = $catname;
-
         return $this;
     }
 
@@ -86,7 +82,6 @@ class Cat
             $this->bookings[] = $booking;
             $booking->setCat($this);
         }
-
         return $this;
     }
 

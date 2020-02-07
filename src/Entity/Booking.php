@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
  */
@@ -50,7 +47,6 @@ class Booking
     public function setStartDate(\DateTimeInterface $startdate): self
     {
         $this->startDate = $startdate;
-
         return $this;
     }
 
@@ -62,7 +58,6 @@ class Booking
     public function setExitDate(\DateTimeInterface $exitdate): self
     {
         $this->exitDate = $exitdate;
-
         return $this;
     }
 
@@ -74,12 +69,8 @@ class Booking
     public function setPriceStay(int $pricestay): self
     {
         $this->priceStay = $pricestay;
-
         return $this;
     }
-
-
-
 
     public function getCat(): ?Cat
     {
@@ -89,10 +80,6 @@ class Booking
     public function setCat(Cat $cat): self
     {
         $this->cat = $cat;
-
         return $this;
     }
-
-
-
 }

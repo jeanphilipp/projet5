@@ -1,20 +1,14 @@
 <?php
-
 namespace App\Controller;
-
 use App\Entity\User;
 use App\Form\RegistrationType;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Doctrine\ORM\EntityManager;
-use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\LoginType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-
 class SecurityController extends AbstractController
 {
     /**
@@ -23,24 +17,18 @@ class SecurityController extends AbstractController
     public function registration(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $errors = [];
-
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
         $message = "";
         if ($form->isSubmitted() && $form->isValid()) {
-
-            //Ajout JP hors visio
             $hash  = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             try {
                 $entityManager->flush();
                  $message = "Félicitation, votre compte a été créé ! Vous pouvez vous connecter.";
-
-
             } catch (UniqueConstraintViolationException $e) {
                 $errors[] = "Ce pseudo a déja été utilisé !";
             }
@@ -50,7 +38,6 @@ class SecurityController extends AbstractController
             'errors' => $errors,
             'message' => $message
         ]);
-
     }
 
     /**
@@ -58,11 +45,6 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
-
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
