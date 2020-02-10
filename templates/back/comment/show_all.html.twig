@@ -3,6 +3,8 @@
 {% block head %}
     {{ parent() }}
 {% endblock %}
+
+{% block body %}
  {% block content %}
      <table class="table table-bordered table-striped table-condensed">
          <thead>
@@ -14,9 +16,12 @@
          {% for comment in comments %}
              <tr>
                  <td>{{ comment.content}}</td>
-                 <td>pseudo</td>
+                 <td>{{ comment.user.pseudo }}</td>
                  <td><a href="{{ path('app_comment_delete', {id:comment.id}) }}">Supprimer</a></td>
              </tr>
          {% endfor %}
      </table>
  {% endblock %}
+
+{% endblock %}
+

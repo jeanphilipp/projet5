@@ -6,8 +6,9 @@
     {% endif %}
 
     {% if app.user %}
+
         <div class="mb-3">
-            Vous êtes connecté en tant que {{ app.user.username }} <a class="btn btn-secondary"
+            Vous êtes connecté en tant que {{ app.user.pseudo }} &nbsp;&nbsp;<a class="btn btn-secondary"
                                                                       href="{{ path('app_logout') }}">Déconnexion</a>
         </div>
     {% else %}

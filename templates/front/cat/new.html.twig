@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block content %}
+    <p>Pour voir vos réservations en cours &nbsp;&nbsp;<a class="btn btn-secondary"
+                                             href="{{ path('booking') }}">Cliquez ici</a></p>
+
     {{ form_start(form) }}
-    {{ form_row(form.catName,{'label':'Inscription','attr': {'placeholder':'Nom de votre chat'}}) }}
+    {{ form_row(form.catName,{'label':'Inscrire un nouveau chat','attr': {'placeholder':'Nom de votre chat'}}) }}
     <button type="submit" class="btn btn-secondary">Envoyer</button>
     {{ form_end(form) }}
 {% endblock  %}

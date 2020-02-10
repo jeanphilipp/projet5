@@ -28,7 +28,7 @@
         <ul class="avis">
             {% for comment in comments %}
                 <li class="liste-avis text-left">
-                    {{ comment.content }}<p class="small">Posté par :
+                    {{ comment.content }}<p class="small">Posté par
                         {% if comment.user is not null %}
                             {{ comment.user.pseudo }}
                         {% else %}

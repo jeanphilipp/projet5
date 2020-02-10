@@ -101,6 +101,27 @@ class HomeController extends AbstractController
     }
 
     /**
+     * @Route("/booking/update/{id}", name="app_booking_update")
+     */
+    public function update(Booking $booking, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $form = $this->createForm(BookingType::class, $booking);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $entityManager->persist($booking);
+            $entityManager->flush();
+            return $this->redirectToRoute('booking');
+        }
+
+        return $this->render('front/cat/update.html.twig', [
+             'booking' => $booking,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route("/booking/delete/{id}", name="app_booking_delete")
      */
     public function delete(int $id)

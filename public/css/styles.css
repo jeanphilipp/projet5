@@ -1,13 +1,11 @@
-html, body {
+body
+{
     margin: 0;
     padding: 0;
-}
-body {
-   /* font-family:arial, sans-serif;*/
+    font-family: Verdana, Arial, sans-serif;
     background-color: #F6F7F9;
     color:#fff;
 }
-/* a remplacer par ?? */
 .avis{
     display:block;
     padding:0;
@@ -17,7 +15,6 @@ body {
     padding: 0;
     font-style: italic;
 }
-/**** Fin de a remplacer ? */
 .container {
    background-image: url("../images/chat.jpg");
     background-repeat:no-repeat;
@@ -34,12 +31,12 @@ h1{
 nav {
     background-color: #c7b79d;
 }
-.navbar-brand{
+.navbar-brand {
     color:#FFFFFF;
     text-decoration: none;
     font-size: 1.4em;
-   font-family: arial;
-color:#653512;
+    font-family: arial;
+    color:#653512;
 }
 .navbar-brand:hover{
     color:#FFFFFF;
@@ -76,7 +73,6 @@ ul li{
 .h5{
     color :#653512;
 }
-
 #footer{
     background-color: #c7b79d;
     background-size: 100%;
@@ -92,12 +88,18 @@ ul li{
     font-weight: bold;
 }
 /************* MEDIA QUERIES ********************/
-@media screen and (max-width: 899px){
+/* 899 */
+@media screen and (max-width: 990px){
+
+    h1{
+        font-size: 1.8em;
+    }
     .menu{
         display: block;
         width:100%;
         background: #000;
         text-align: right;
+
     }
     .burger{
         color:#fff;
@@ -113,4 +115,10 @@ ul li{
         flex-direction: column;
         align-items: center;
     }
+    .active li{
+        padding:0px 20px;
+        font-size:0.8em;
+    }
 }
+
+

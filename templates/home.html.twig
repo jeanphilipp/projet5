@@ -3,6 +3,7 @@
 {% block head %}
     {{ parent() }}
 {% endblock %}
+{% block body %}
     {% block content %}
         <h2>Bienvenue à la pension féline Le Chat Botté !</h2>
         <p>Vous partez en vacances ? vous allez être hospitalisé ?</p>
@@ -11,3 +12,5 @@
         <p class="main-content-plus">Pour réserver, rien de plus simple. Créez un compte et choisissez votre période de
             réservation. </p>
     {% endblock %}
+
+{% endblock %}
