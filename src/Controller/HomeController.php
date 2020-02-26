@@ -25,11 +25,10 @@ class HomeController extends AbstractController
      */
     public function aboutUs(Request $request, Security $security)
     {
-        //dump($security->getUser());
         $entityManager = $this->getDoctrine()->getManager();
         $comments = $entityManager->getRepository(Comment::class)->findAll();
         $comment = new Comment();
-        //Ajout composant user = Security
+        /* Ajout du Composant user = Security*/
         $user = $security->getUser();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -51,36 +50,9 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/booking", name="booking")
-     */
-    public function booking(Request $request)
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $bookings = $entityManager->getRepository(Booking::class)->findAll();
-        $cats = $entityManager->getRepository(Cat::class)->findAll();
-        $booking = new Booking();
-        $form = $this->createForm(BookingType::class, $booking);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $interval = date_diff($booking->getStartDate(), $booking->getExitDate());
-            $nb_jours = (int)$interval->format('%R%a');
-            $booking->setPriceStay($nb_jours * 10);
-            $entityManager->persist($booking);
-            $entityManager->flush();
-            return $this->redirectToRoute('booking');
-        }
-        return $this->render('booking.html.twig', [
-                'form' => $form->createView(),
-                'bookings' => $bookings,
-                'cats' => $cats
-            ]
-        );
-    }
-
-    /**
      * @Route("/cats/create")
      */
-    public function create(Request $request)
+    public function create(Request $request)/* Inscrire un chat via le formulaire */
     {
         $entityManager = $this->getDoctrine()->getManager();
         $cat = new Cat();
@@ -101,23 +73,54 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/booking/update/{id}", name="app_booking_update")
+     * @Route("/booking", name="booking")
      */
-    public function update(Booking $booking, Request $request)
+    public function booking(Request $request, Security $security)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $form = $this->createForm(BookingType::class, $booking);
+        /*$bookings = $entityManager->getRepository(Booking::class)->findAll();
+          $bookings = $entityManager->getRepository(Booking::class)->findBy(['user'=>$security->getUser()]);
+          $cats = $entityManager->getRepository(Cat::class)->findAll();*/
+        $cats = $entityManager->getRepository(Cat::class)->findBy(['user'=>$security->getUser()]);
+        $booking = new Booking();
+        $form = $this->createForm(BookingType::class, $booking, ['user'=>$security->getUser()]);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $interval = date_diff($booking->getStartDate(), $booking->getExitDate());
+            $nb_jours = (int)$interval->format('%R%a');
+            $booking->setPriceStay($nb_jours * 10);
             $entityManager->persist($booking);
             $entityManager->flush();
             return $this->redirectToRoute('booking');
         }
-
+        return $this->render('booking.html.twig', [
+                'form' => $form->createView(),
+                'user'  => $security->getUser(),
+                'cats' => $cats,
+            ]
+        );
+    }
+    /**
+     * @Route("/booking/update/{id}", name="app_booking_update")
+     */
+    public function update(Booking $booking, Request $request, Security $security)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $form = $this->createForm(BookingType::class, $booking, ['user'=>$security->getUser()]);//ajout mercredi apres visio
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            /*Ajout pour calculer le prix du sejour*/
+            $interval = date_diff($booking->getStartDate(), $booking->getExitDate());
+            $nb_jours = (int)$interval->format('%R%a');
+            $booking->setPriceStay($nb_jours * 10);
+            $entityManager->persist($booking);
+            $entityManager->flush();
+            return $this->redirectToRoute('booking');
+        }
         return $this->render('front/cat/update.html.twig', [
              'booking' => $booking,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 

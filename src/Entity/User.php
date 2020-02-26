@@ -226,7 +226,6 @@ class User implements UserInterface
             $this->comments[] = $comment;
             $comment->setUser($this);
         }
-
         return $this;
     }
 

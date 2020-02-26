@@ -2,6 +2,7 @@
 namespace App\Form;
 use App\Entity\Booking;
 use App\Entity\Cat;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -12,13 +13,19 @@ class BookingType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //dump($_SESSION); die;
+       // dump($options);die;
+       $user = $options['user'];
         $builder
             ->add('cat', EntityType::class, array(
                 'label' => 'Votre chat :',
                 'class' => Cat::class,
                 'choice_label' => 'catName',
 
+                /*ajout fonction anonyme */
+                'query_builder' => function (EntityRepository $er)use($user) {
+                   return $er->createQueryBuilder('c')
+                       ->where('c.user = :user')->setParameter(':user', $user);
+              },
             ))
             ->add('startDate', DateType::class,
                 [
@@ -39,7 +46,13 @@ class BookingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Booking::class
+            'data_class' => Booking::class,
+
+            'user' => null,
+
         ));
+
+
+
     }
 }

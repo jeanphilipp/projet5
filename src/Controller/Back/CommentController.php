@@ -6,6 +6,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommentController extends AbstractController
 {
     /**
+     * @Route("/admin/comments", name="app_comments_show")
+     */
+    public function showAll(){
+        $entityManager = $this->getDoctrine()->getManager();
+        $comments = $entityManager->getRepository(Comment::class)->findAll();
+        return $this->render('back/comment/show_all.html.twig',[
+            'comments' => $comments
+        ]);
+    }
+
+    /**
      * @Route("/admin/comment/delete/{id}",name="app_comment_delete")
      */
     public function delete(int $id)
@@ -16,17 +27,6 @@ class CommentController extends AbstractController
             $entityManager->remove($comment);
             $entityManager->flush();
         }
-            return $this->redirectToRoute('app_comments_show');
-    }
-
-    /**
-     * @Route("/admin/comments", name="app_comments_show")
-     */
-    public function showAll(){
-        $entityManager = $this->getDoctrine()->getManager();
-        $comments = $entityManager->getRepository(Comment::class)->findAll();
-        return $this->render('back/comment/show_all.html.twig',[
-            'comments' => $comments
-        ]);
+        return $this->redirectToRoute('app_comments_show');
     }
 }

@@ -9,6 +9,7 @@
             <div class="row">
                 <div class="col-12">
                     <p class="h4">Créez votre compte </p>
+                    <small>Pour consulter le réglement général de protection des données, <a href="{{ asset('images/rgpd.pdf') }}">cliquez ici</a></small>
                    {% if errors|length > 0 %}
                          {% for error in errors %}
                              <p>{{ error }}</p>
@@ -26,7 +27,7 @@
 
             </div>
             <br>
-            <small>Pour consulter le réglement général de protection des données, <a href="{{ asset('images/rgpd.pdf') }}">cliquez ici</a></small>
+
         {% endblock %}
     </div>
 

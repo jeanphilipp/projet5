@@ -7,6 +7,7 @@
     {% block content %}
         <span> Pour inscrire un nouveau chat ou voir vos réservations <a class="btn btn-secondary" href="{{ path('app_home_create') }}" role="button">Cliquez ici</a></span>
         <hr>
+
 {% if app.user %}
 <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -16,27 +17,28 @@
         <th>Prix du sejour </th>
     </tr>
     </thead>
-        {% for booking in bookings %}
+        {% for cat in cats %}
+
+             {% for booking in cat.bookings %}
             <tr>
                 <td>du {{ booking.startDate |date('d-m-Y') }} au {{ booking.exitDate |date('d-m-Y') }}</td>
-
-                <td>{{ booking.cat }}</td>
+                <td>{{ cat }}</td>
                 <td>{{ booking.priceStay }} euros</td>
-
                 <td><a href="{{ path('app_booking_update',{'id' :booking.id}) }}">Modifier</a></td>
                 <td><a href="{{ path('app_booking_delete', {'id' :booking.id}) }}">Supprimer</a></td>
-
                 {#<input type="submit" value="Delete post" class="btn btn-lg btn-block btn-danger"
                        onclick="confirm('Are you sure to delete this post?') || event.preventDefault()">#}
             </tr>
+            {% endfor %}
         {% endfor %}
 </table>
+
         {{ form_start(form) }}
            {{ form_row(form.cat,{'label':'Nom du chat'}) }}
            {{ form_row(form.startDate,{'label':'Date d\'entrée'}) }}
            {{ form_row(form.exitDate,{'label':'Date de sortie'}) }}
         {{ form_end(form) }}
-{% else %}
+{# % else %#}
 {% endif %}
 {% endblock %}
 {% endblock %}

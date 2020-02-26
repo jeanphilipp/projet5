@@ -16,7 +16,6 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
-
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
@@ -30,7 +29,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
-
         $this->passwordEncoder = $passwordEncoder;
     }
 
@@ -51,7 +49,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             Security::LAST_USERNAME,
             $credentials['pseudo']
         );
-
         return $credentials;
     }
 
@@ -61,14 +58,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
-
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['pseudo' => $credentials['pseudo']]);
-
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Ce pseudo n\'existe pas. Veuillez créer un compte');
         }
-
         return $user;
     }
 
@@ -78,13 +72,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         // If there are no credentials to check, you can just return true
        // throw new \Exception('TODO: check the credentials inside '.__FILE__);
         $encoded_password = $credentials['password'];
-        //89 important
         $valid = $this->passwordEncoder->isPasswordValid($user, $credentials['password'] );
-        // ajout visio dump($user->getSalt(), $this->passwordEncoder->encodePassword($user, $credentials['password']), $valid);die;
-
-        // ajout dump($credentials, $user, $valid); die;
         return $valid;
-        //return true;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
@@ -92,7 +81,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
-
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
         return null;
@@ -100,7 +88,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     protected function getLoginUrl()
     {
-        //
         return $this->urlGenerator->generate('app_login');
     }
 }
+
