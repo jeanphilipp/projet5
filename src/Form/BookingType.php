@@ -47,12 +47,8 @@ class BookingType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Booking::class,
-
             'user' => null,
-
         ));
-
-
-
     }
 }
+

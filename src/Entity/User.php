@@ -69,10 +69,7 @@ class User implements UserInterface
      */
     public $confirm_password;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $admin = 0;
+
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Cat", mappedBy="user")
@@ -172,16 +169,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAdmin(): ?bool
-    {
-        return $this->admin;
-    }
 
-    public function setAdmin(bool $admin): self
-    {
-        $this->admin = $admin;
-        return $this;
-    }
 
     /**
      * @return Collection|Cat[]

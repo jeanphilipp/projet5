@@ -21,15 +21,4 @@ class CatController extends AbstractController
             'comments' => $comments,
         ]);
     }
-
-    /**
-     * @Route("/admin/cats/show/{id}")
-     */
-   // public function show(int $id)
-   // {
-     //   $cat = $this->getDoctrine()->getRepository(Cat::class)->find($id);
-        //return $this->render('back/cat/show.html.twig', [
-          //  'cat' => $cat
-      //  ]);
-   // }
 }

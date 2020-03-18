@@ -29,7 +29,7 @@ class Booking
     private $priceStay;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Cat", inversedBy="bookings", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Cat", inversedBy="bookings", cascade={"persist"})
      * @ORM\JoinColumn(name="cat_id", referencedColumnName="id", nullable=false)
      */
     private $cat;

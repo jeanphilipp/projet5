@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App\Controller\Front;
 use App\Entity\Booking;
 use App\Entity\Cat;
 use App\Entity\Comment;
@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Security;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="app_home_homepage")
      */
     public function homepage()
     {
@@ -50,7 +50,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/cats/create")
+     * @Route("/cats/create", name="app_home_create")
      */
     public function create(Request $request)/* Inscrire un chat via le formulaire */
     {
@@ -88,10 +88,10 @@ class HomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $interval = date_diff($booking->getStartDate(), $booking->getExitDate());
             $nb_jours = (int)$interval->format('%R%a');
-            $booking->setPriceStay($nb_jours * 10);
-            $entityManager->persist($booking);
-            $entityManager->flush();
-            return $this->redirectToRoute('booking');
+                $booking->setPriceStay($nb_jours * 10);
+                $entityManager->persist($booking);
+                $entityManager->flush();
+                return $this->redirectToRoute('booking');
         }
         return $this->render('booking.html.twig', [
                 'form' => $form->createView(),
@@ -100,6 +100,7 @@ class HomeController extends AbstractController
             ]
         );
     }
+
     /**
      * @Route("/booking/update/{id}", name="app_booking_update")
      */
@@ -129,7 +130,6 @@ class HomeController extends AbstractController
      */
     public function delete(int $id)
     {
-        {
             $entityManager = $this->getDoctrine()->getManager();
             $booking = $entityManager->getRepository(Booking::class)->find($id);
             if ($booking instanceof Booking) {
@@ -137,7 +137,6 @@ class HomeController extends AbstractController
                 $entityManager->flush();
             }
             return $this->redirectToRoute('booking');
-        }
     }
 }
 

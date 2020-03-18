@@ -13,7 +13,7 @@
         </div>
         {% if is_granted('ROLE_ADMIN') %}
             <a class="btn btn-secondary" href="{{ path('app_admin') }}">Voir les réservations</a>
-            <a class="btn btn-secondary" href="{{ path('app_comments_show') }}">Voir les avis</a>
+          &nbsp;<a class="btn btn-secondary" href="{{ path('app_comments_show') }}">Voir les avis</a>
         {% endif %}
     {% else %}
 
