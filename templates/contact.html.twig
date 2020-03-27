@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block title %} Contact {% endblock %}
+ {% block content %}
+
+<p class="text-danger">
+
+ {% if info_contact is defined %}
+  <p> {{ info_contact }} </p>
+   {{ form_start(form) }}
+  {{ form_row(form.pseudo,{'label':'Pseudo','attr': {'placeholder':'Votre pseudo'}}) }}
+  {{ form_row(form.email,{'label':'Email','attr': {'placeholder':'Votre email'}}) }}
+  {{ form_row(form.objet,{'label':'Objet','attr': {'placeholder':'Objet'}}) }}
+  {{ form_row(form.message,{'label':'Message','attr': {'placeholder':'Votre message'}}) }}
+  {{ form_end(form) }}
+ {% endif %}
+
+ {% endblock %}
+
+
+
+

@@ -6,8 +6,12 @@ use App\Entity\Comment;
 use App\Form\BookingType;
 use App\Form\CatType;
 use App\Form\CommentType;
+use App\Form\ContactType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 class HomeController extends AbstractController
@@ -107,11 +111,11 @@ class HomeController extends AbstractController
     public function update(Booking $booking, Request $request, Security $security)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $form = $this->createForm(BookingType::class, $booking, ['user'=>$security->getUser()]);//ajout mercredi apres visio
+        $form = $this->createForm(BookingType::class, $booking, ['user'=>$security->getUser()]);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
-            /*Ajout pour calculer le prix du sejour*/
+            /* Calcul du prix du sejour*/
             $interval = date_diff($booking->getStartDate(), $booking->getExitDate());
             $nb_jours = (int)$interval->format('%R%a');
             $booking->setPriceStay($nb_jours * 10);
@@ -137,6 +141,47 @@ class HomeController extends AbstractController
                 $entityManager->flush();
             }
             return $this->redirectToRoute('booking');
+    }
+
+    /**
+     * @Route("/contact" , name="app_contact")
+     */
+    public function contact(Request $request, MailerInterface $mailer)
+    {
+        /*$entityManager = $this->getDoctrine()->getManager();*/
+        $form = $this->createForm(ContactType::class);
+        $form->handleRequest($request);
+
+       // $info_contact= "";
+
+         $info_contact= null;
+
+        if($form->isSubmitted() && $form->isValid() )
+        {
+            dump($mailer);
+            $data = $form->getData();
+           $info_contact = " Votre message a bien été envoyé";
+            $email = (new TemplatedEmail())
+                ->from('jean@gmail.com')
+                ->to('jean@gmail.com')
+                ->subject($data['objet'])
+                // path of the Twig template to render
+                ->htmlTemplate('email/contact.html.twig')
+                // pass variables (name => value) to the template
+                ->context([
+                    'data' => $data,
+                ]);
+            dump($email);
+            $mailer->send($email);
+            dump($form->getData());
+
+            return $this->redirectToRoute('app_contact');
+        }
+
+     return $this->render('contact.html.twig', [
+       'form' => $form->createView(),
+       'info_contact' => $info_contact,
+      ]);
     }
 }
 
