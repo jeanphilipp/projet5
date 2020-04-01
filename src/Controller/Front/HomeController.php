@@ -11,7 +11,6 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 class HomeController extends AbstractController
@@ -152,18 +151,15 @@ class HomeController extends AbstractController
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
 
-       // $info_contact= "";
-
-         $info_contact= null;
-
+       $info_contact= "";
         if($form->isSubmitted() && $form->isValid() )
         {
-            dump($mailer);
-            $data = $form->getData();
-           $info_contact = " Votre message a bien été envoyé";
-            $email = (new TemplatedEmail())
-                ->from('jean@gmail.com')
-                ->to('jean@gmail.com')
+             dump($mailer);
+             $data = $form->getData();
+             $info_contact = " Votre message a bien été envoyé";
+             $email = (new TemplatedEmail())
+                ->from('john@free.com')
+                ->to('john@free.com')
                 ->subject($data['objet'])
                 // path of the Twig template to render
                 ->htmlTemplate('email/contact.html.twig')
@@ -171,11 +167,11 @@ class HomeController extends AbstractController
                 ->context([
                     'data' => $data,
                 ]);
-            dump($email);
-            $mailer->send($email);
-            dump($form->getData());
+             dump($email);
+             $mailer->send($email);
+             dump($form->getData());
 
-            return $this->redirectToRoute('app_contact');
+            //return $this->redirectToRoute('app_contact');
         }
 
      return $this->render('contact.html.twig', [

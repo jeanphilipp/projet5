@@ -1,6 +1,25 @@
 {% extends 'base.html.twig' %}
 {% block title %}Connexion{% endblock %}
 {% block content %}
+
+    {% for message in app.flashes('message') %}
+        <div class="alert alert-success" role="alert">
+        {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning" role="alert">
+        {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger" role="alert">
+        {{ message }}
+        </div>
+    {% endfor %}
+
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -31,6 +50,8 @@
             <button class="btn btn-secondary" type="submit">
                 Connectez-vous
             </button>
+
+            <a href="{{ path('app_ask_for_reset') }}">Mot de passe oublié</a>
             ou
             <span class="h4"><a class="btn btn-secondary"
                                 href="{{ path('security_registration') }}">Créer votre compte</a></span>
