@@ -73,14 +73,15 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
        // throw new \Exception('TODO: check the credentials inside '.__FILE__);
         $encoded_password = $credentials['password'];
 
-        dump($this->passwordEncoder, $user,$credentials);die;
+       // dump($this->passwordEncoder, $user,$credentials);die;
         $valid = $this->passwordEncoder->isPasswordValid($user, $credentials['password'] );
+        dump($valid, $user, $credentials, $this->passwordEncoder);die;
         return $valid;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+        if($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));

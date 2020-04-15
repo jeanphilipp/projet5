@@ -24,8 +24,8 @@
                 <td>du {{ booking.startDate |date('d-m-Y') }} au {{ booking.exitDate |date('d-m-Y') }}</td>
                 <td>{{ cat }}</td>
                 <td>{{ booking.priceStay }} euros</td>
-                <td><a href="{{ path('app_booking_update',{'id' :booking.id}) }}">Modifier</a></td>
-                <td><a href="{{ path('app_booking_delete', {'id' :booking.id}) }}">Supprimer</a></td>
+                <td><a class="text-secondary font-weight-bold" href="{{ path('app_booking_update',{'id' :booking.id}) }}">Modifier</a></td>
+                <td><a class="text-secondary font-weight-bold" href="{{ path('app_booking_delete', {'id' :booking.id}) }}">Supprimer</a></td>
             </tr>
             {% endfor %}
         {% endfor %}

@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(
@@ -59,7 +60,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      * @Assert\Length(min="4", minMessage="Votre mot de passe doit comporter 4 caractères minimum")
      */
     private $password;
@@ -68,8 +69,6 @@ class User implements UserInterface
      * @Assert\EqualTo(propertyPath="password", message="Les mots de passe saisis ne sont pas identiques !")
      */
     public $confirm_password;
-
-
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Cat", mappedBy="user")
@@ -243,6 +242,7 @@ class User implements UserInterface
       return $this->getName();
    }
 
+   
 //Ajout ci-dessous pour le composant security
     /**
      * A visual identifier that represents this user.

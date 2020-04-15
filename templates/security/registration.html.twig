@@ -8,6 +8,7 @@
         {% block content %}
             <div class="row">
                 <div class="col-12">
+                    <p class="font-weight-bold">{{ message }}</p>
                     <p class="h4">Créez votre compte </p>
                     <small>Pour consulter le réglement général de protection des données, <a href="{{ asset('images/rgpd.pdf') }}">cliquez ici</a></small>
                    {% if errors|length > 0 %}
@@ -22,7 +23,6 @@
                        {{ form_row(form.confirm_password,{'label':'Confirmation mot de passe','attr': {'placeholder':'Répétez votre mot de passe'}}) }}
                     <button type="submit" class="btn btn-secondary">S'incrire</button>
                     {{ form_end(form) }}
-                    {{ message }}
                 </div>
 
             </div>

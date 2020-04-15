@@ -154,12 +154,13 @@ class HomeController extends AbstractController
        $info_contact= "";
         if($form->isSubmitted() && $form->isValid() )
         {
-             dump($mailer);
+             // Penser a supprimer les dump
+             //dump($mailer);
              $data = $form->getData();
              $info_contact = " Votre message a bien été envoyé";
              $email = (new TemplatedEmail())
-                ->from('john@free.com')
-                ->to('john@free.com')
+                ->from('jpgscn@gmail.com')
+                ->to('jpgscn@gmail.com')
                 ->subject($data['objet'])
                 // path of the Twig template to render
                 ->htmlTemplate('email/contact.html.twig')
@@ -167,9 +168,9 @@ class HomeController extends AbstractController
                 ->context([
                     'data' => $data,
                 ]);
-             dump($email);
+             //dump($email);
              $mailer->send($email);
-             dump($form->getData());
+             //dump($form->getData());
 
             //return $this->redirectToRoute('app_contact');
         }

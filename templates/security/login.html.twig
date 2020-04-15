@@ -1,22 +1,21 @@
 {% extends 'base.html.twig' %}
 {% block title %}Connexion{% endblock %}
 {% block content %}
-
     {% for message in app.flashes('message') %}
         <div class="alert alert-success" role="alert">
-        {{ message }}
+            {{ message }}
         </div>
     {% endfor %}
 
     {% for message in app.flashes('warning') %}
         <div class="alert alert-warning" role="alert">
-        {{ message }}
+            {{ message }}
         </div>
     {% endfor %}
 
     {% for message in app.flashes('danger') %}
         <div class="alert alert-danger" role="alert">
-        {{ message }}
+            {{ message }}
         </div>
     {% endfor %}
 
@@ -25,22 +24,23 @@
     {% endif %}
 
     {% if app.user %}
-
         <div class="mb-3">
-            Vous êtes connecté en tant que {{ app.user.pseudo }} &nbsp;&nbsp;<a class="btn btn-secondary"
-                                                                      href="{{ path('app_logout') }}">Déconnexion</a>
+            Vous êtes connecté en tant que {{ app.user.pseudo }}&nbsp;<a class="btn btn-secondary"
+                                                                         href="{{ path('app_logout') }}">Déconnexion</a>
+            <p><a class="text-secondary font-weight-bold" href="{{ path('app_show_profile') }}">Voir votre compte</a>
+            </p>
         </div>
         {% if is_granted('ROLE_ADMIN') %}
             <a class="btn btn-secondary" href="{{ path('app_admin') }}">Voir les réservations</a>
-          &nbsp;<a class="btn btn-secondary" href="{{ path('app_comments_show') }}">Voir les avis</a>
+            &nbsp;<a class="btn btn-secondary" href="{{ path('app_comments_show') }}">Voir les avis</a>
         {% endif %}
     {% else %}
 
         <form method="post">
             <label for="inputPseudo">Pseudo</label>
             <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control"
-                   placeholder="Votre pseudo" required autofocus>
-            <label for="inputPassword">Password</label>
+                   placeholder="Votre pseudo" required autofocus><br>
+            <label for="inputPassword">Mot de passe</label>
             <input type="password" name="password" id="inputPassword" class="form-control"
                    placeholder="Votre mot de passe"
                    required>
@@ -51,10 +51,9 @@
                 Connectez-vous
             </button>
 
-            <a href="{{ path('app_ask_for_reset') }}">Mot de passe oublié</a>
-            ou
+            <a class="text-secondary font-weight-bold" href="{{ path('app_ask_for_reset') }}">Mot de passe oublié</a>
             <span class="h4"><a class="btn btn-secondary"
-                                href="{{ path('security_registration') }}">Créer votre compte</a></span>
+                                href="{{ path('security_registration') }}">Créez votre compte</a></span>
         </form>
     {% endif %}
     {#

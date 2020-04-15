@@ -1,9 +1,11 @@
 <?php
 namespace App\Controller;
 use App\Entity\User;
+use App\Form\ProfileType;
 use App\Form\RegistrationType;
 use App\Form\AskForResetPasswordType;
-use App\Repository\UserRepository;
+use App\Form\ResetPasswordType;
+use App\Security\LoginFormAuthenticator;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +15,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -40,6 +43,8 @@ class SecurityController extends AbstractController
                 $errors[] = "Ce pseudo a déja été utilisé !";
             }
         }
+
+
         return $this->render('security/registration.html.twig', [
             'form' => $form->createView(),
             'errors' => $errors,
@@ -90,7 +95,6 @@ class SecurityController extends AbstractController
                 // On envoie un message flash
                 $this->addFlash('danger', 'Cette adresse Email n\'existe pas !');
                 return $this->redirectToRoute('app_login');
-
             }
 
             // On génère un token
@@ -127,18 +131,22 @@ Chat Botté. Veuillez cliquer sur le lien suivant :' . $url . '</p>', 'text/html
             $this->addFlash('message', 'Un émail de réinitialisation de mot de passe vous a été envoyé');
             return $this->redirectToRoute('app_login');
         }
-// On envoie vers la page de demande de l'émail
+        // On envoie vers la page de demande de l'émail
         return $this->render('security/forgotten_password.html.twig', ['emailForm' => $form->createView()]);
     }
 
     /**
      * @Route("/reset-pass/{token}", name="app_reset_password")
      */
-    public function resetPassword($token, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function resetPassword($token, Request $request, UserPasswordEncoderInterface $encoder)
     {
+        // Ajout samedi pour afficher les erreurs dans le form
+        $errors = [];
+        // UserPasswordEncoderInterface $passwordEncoder
         // On cherche l'utilisateur avec le token fourni
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['reset_token'=>$token]);
 
+        //dump($token, $user);
         if(!$user)
         {
             $this->addFlash('danger', 'Token inconnu');
@@ -150,10 +158,17 @@ Chat Botté. Veuillez cliquer sur le lien suivant :' . $url . '</p>', 'text/html
             // On supprime le token
             $user->setResetToken(null);
             // On chiffre le mot de passe
-            $user->getEmail($passwordEncoder->encodePassword($user, $request->request->get('password')));
+            // ESSAI 2 lignes ajoutees
+            $hash  = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+
+
+           // Premier : $user->getEmail($passwordEncoder->encodePassword($user, $request->request->get('password')));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
+            //dump($user, $encoder);die;
 
             $this->addFlash('message', 'Mot de passe changé avec succès !');
 
@@ -161,11 +176,48 @@ Chat Botté. Veuillez cliquer sur le lien suivant :' . $url . '</p>', 'text/html
         }
         else
         {
-            return $this->render('security/reset_password.html.twig', ['token' => $token]);
+            return $this->render('security/reset_password.html.twig',
+                [
+                    'errors' => $errors,
+                    'token' => $token
+                ]);
         }
-
     }
+
+    /**
+     * @Route("/show-profile", name="app_show_profile")
+     */
+    public function showProfile(Request $request, Security $security)
+{
+    $entityManager = $this->getDoctrine()->getManager();
+    $pseudo = $entityManager->getRepository(User::class)->findOneBy(['pseudo' => $security->getUser()]);
+    $email = $entityManager->getRepository (User::class)->findOneBy(['email' => $security->getUser()]);
+    $password = $entityManager->getRepository (User::class)->findOneBy(['password' => $security->getUser()]);
+    return $this->render('security/show_profile.html.twig',[
+        'pseudo' => $pseudo,
+        'email' => $email,
+        'password' => $password
+    ]);
 }
+
+/**
+ * @Route("/update-profile/{id}", name="app_update_profile")
+ */
+ public function updateProfile(User $user, Request $request, Security $security)
+ {
+     $entityManager = $this->getDoctrine()->getManager();
+     $email = $entityManager->getRepository(User::class)->findOneBy(['email' => $security->getUser()]);
+     $entityManager->persist($email);
+     $entityManager->flush();
+     return $this->render('security/update_profile.html.twig',[
+             'email' => $email
+         ]);
+
+ }
+
+}
+
+
 
 
 

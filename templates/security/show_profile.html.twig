@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block title %}Votre compte{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div class="container">
+        {% block content %}
+
+            {% if app.user %}
+
+            <div class="row">
+                <div class="col-12">
+                    <p class="h4">Votre compte :</p> <br />
+                    <table class="table table-bordered table-striped table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Votre pseudo</th>
+                            <th>Votre Email</th>
+                            <th>Votre mot de passe</th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td>{{ app.user.pseudo }}</td>
+                            <td>{{ app.user.email }}</td>
+                            <td>password</td>
+                            <td><a class="text-secondary font-weight-bold"
+                                   href="{{ path('app_update_profile',{'id':app.user.id}) }}">Modifier </a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}
