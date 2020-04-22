@@ -13,7 +13,6 @@ class BookingType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-       // dump($options);die;
        $user = $options['user'];
         $builder
             ->add('cat', EntityType::class, array(

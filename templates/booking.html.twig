@@ -4,38 +4,45 @@
     {{ parent() }}
 {% endblock %}
 {% block body %}
+    <div class="container">
     {% block content %}
-        <span class="font-weight-bold">Pour inscrire un nouveau chat ou voir vos réservations <a class="btn btn-secondary" href="{{ path('app_home_create') }}" role="button">Cliquez ici</a></span>
+        <span class="font-weight-bold">Pour inscrire un nouveau chat ou voir vos réservations
+            <a class="btn btn-secondary" href="{{ path('app_home_create') }}" role="button">Cliquez ici</a></span>
+        <hr>
+        <img class="img-fluid" src="{{ asset('images/chat2.jpg') }}" alt="chats">
         <hr>
 
-{% if app.user %}
-<table class="table table-bordered table-striped table-condensed">
-    <thead>
-    <tr>
-        <th>Réservations en cours</th>
-        <th>Nom du chat</th>
-        <th>Prix du sejour </th>
-    </tr>
-    </thead>
-        {% for cat in cats %}
+        {% if app.user %}
+            <table class="table table-bordered table-striped table-condensed">
+                <thead>
+                <tr>
+                    <th>Réservations en cours</th>
+                    <th>Nom du chat</th>
+                    <th>Prix du sejour</th>
+                </tr>
+                </thead>
+                {% for cat in cats %}
 
-             {% for booking in cat.bookings %}
-            <tr>
-                <td>du {{ booking.startDate |date('d-m-Y') }} au {{ booking.exitDate |date('d-m-Y') }}</td>
-                <td>{{ cat }}</td>
-                <td>{{ booking.priceStay }} euros</td>
-                <td><a class="text-secondary font-weight-bold" href="{{ path('app_booking_update',{'id' :booking.id}) }}">Modifier</a></td>
-                <td><a class="text-secondary font-weight-bold" href="{{ path('app_booking_delete', {'id' :booking.id}) }}">Supprimer</a></td>
-            </tr>
-            {% endfor %}
-        {% endfor %}
-</table>
+                    {% for booking in cat.bookings %}
+                        <tr>
+                            <td>du {{ booking.startDate |date('d-m-Y') }} au {{ booking.exitDate |date('d-m-Y') }}</td>
+                            <td>{{ cat }}</td>
+                            <td>{{ booking.priceStay }} euros</td>
+                            <td><a class="text-secondary font-weight-bold"
+                                   href="{{ path('app_booking_update',{'id' :booking.id}) }}">Modifier</a></td>
+                            <td><a class="text-secondary font-weight-bold"
+                                   href="{{ path('app_booking_delete', {'id' :booking.id}) }}">Supprimer</a></td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
 
-        {{ form_start(form) }}
-           {{ form_row(form.cat,{'label':'Nom du chat'}) }}
-           {{ form_row(form.startDate,{'label':'Date d\'entrée'}) }}
-           {{ form_row(form.exitDate,{'label':'Date de sortie'}) }}
-        {{ form_end(form) }}
-{% endif %}
-{% endblock %}
+            {{ form_start(form) }}
+            {{ form_row(form.cat,{'label':'Nom du chat'}) }}
+            {{ form_row(form.startDate,{'label':'Date d\'entrée'}) }}
+            {{ form_row(form.exitDate,{'label':'Date de sortie'}) }}
+            {{ form_end(form) }}
+        {% endif %}
+    {% endblock %}
+    </div>
 {% endblock %}

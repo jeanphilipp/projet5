@@ -8,8 +8,7 @@ class CatType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('catName');
+        $builder->add('catName');
     }
 
     public function configureOptions(OptionsResolver $resolver)

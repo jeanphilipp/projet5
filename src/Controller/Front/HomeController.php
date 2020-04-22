@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controller\Front;
+
 use App\Entity\Booking;
 use App\Entity\Cat;
 use App\Entity\Comment;
@@ -13,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+
 class HomeController extends AbstractController
 {
     /**
@@ -31,13 +34,11 @@ class HomeController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $comments = $entityManager->getRepository(Comment::class)->findAll();
         $comment = new Comment();
-        /* Ajout du Composant user = Security*/
         $user = $security->getUser();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            //user connecté !!
+        if ($form->isSubmitted() && $form->isValid()) {
+            //user connecté
             $comment->setUser($user);
             $comment->setCreatedAt(new \DateTime());
             $entityManager->persist($comment);
@@ -54,23 +55,22 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/cats/create", name="app_home_create")
+     * Inscrire un chat via le formulaire
      */
-    public function create(Request $request)/* Inscrire un chat via le formulaire */
+    public function create(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $cat = new Cat();
         $form = $this->createForm(CatType::class, $cat);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            //ne pas oublier
+        if ($form->isSubmitted() && $form->isValid()) {
             $cat->setUser($this->getUser());
             $entityManager->persist($cat);
             $entityManager->flush();
             return $this->redirectToRoute('booking');
         }
         return $this->render('front/cat/new.html.twig',
-            [   'form' => $form->createView(),
+            ['form' => $form->createView(),
                 'cat' => $cat
             ]);
     }
@@ -81,24 +81,21 @@ class HomeController extends AbstractController
     public function booking(Request $request, Security $security)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        /*$bookings = $entityManager->getRepository(Booking::class)->findAll();
-          $bookings = $entityManager->getRepository(Booking::class)->findBy(['user'=>$security->getUser()]);
-          $cats = $entityManager->getRepository(Cat::class)->findAll();*/
-        $cats = $entityManager->getRepository(Cat::class)->findBy(['user'=>$security->getUser()]);
+        $cats = $entityManager->getRepository(Cat::class)->findBy(['user' => $security->getUser()]);
         $booking = new Booking();
-        $form = $this->createForm(BookingType::class, $booking, ['user'=>$security->getUser()]);
+        $form = $this->createForm(BookingType::class, $booking, ['user' => $security->getUser()]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $interval = date_diff($booking->getStartDate(), $booking->getExitDate());
             $nb_jours = (int)$interval->format('%R%a');
-                $booking->setPriceStay($nb_jours * 10);
-                $entityManager->persist($booking);
-                $entityManager->flush();
-                return $this->redirectToRoute('booking');
+            $booking->setPriceStay($nb_jours * 10);
+            $entityManager->persist($booking);
+            $entityManager->flush();
+            return $this->redirectToRoute('booking');
         }
         return $this->render('booking.html.twig', [
                 'form' => $form->createView(),
-                'user'  => $security->getUser(),
+                'user' => $security->getUser(),
                 'cats' => $cats,
             ]
         );
@@ -110,10 +107,9 @@ class HomeController extends AbstractController
     public function update(Booking $booking, Request $request, Security $security)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $form = $this->createForm(BookingType::class, $booking, ['user'=>$security->getUser()]);
+        $form = $this->createForm(BookingType::class, $booking, ['user' => $security->getUser()]);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             /* Calcul du prix du sejour*/
             $interval = date_diff($booking->getStartDate(), $booking->getExitDate());
             $nb_jours = (int)$interval->format('%R%a');
@@ -123,7 +119,7 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('booking');
         }
         return $this->render('front/cat/update.html.twig', [
-             'booking' => $booking,
+            'booking' => $booking,
             'form' => $form->createView(),
         ]);
     }
@@ -133,13 +129,13 @@ class HomeController extends AbstractController
      */
     public function delete(int $id)
     {
-            $entityManager = $this->getDoctrine()->getManager();
-            $booking = $entityManager->getRepository(Booking::class)->find($id);
-            if ($booking instanceof Booking) {
-                $entityManager->remove($booking);
-                $entityManager->flush();
-            }
-            return $this->redirectToRoute('booking');
+        $entityManager = $this->getDoctrine()->getManager();
+        $booking = $entityManager->getRepository(Booking::class)->find($id);
+        if ($booking instanceof Booking) {
+            $entityManager->remove($booking);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('booking');
     }
 
     /**
@@ -147,18 +143,13 @@ class HomeController extends AbstractController
      */
     public function contact(Request $request, MailerInterface $mailer)
     {
-        /*$entityManager = $this->getDoctrine()->getManager();*/
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
-
-       $info_contact= "";
-        if($form->isSubmitted() && $form->isValid() )
-        {
-             // Penser a supprimer les dump
-             //dump($mailer);
-             $data = $form->getData();
-             $info_contact = " Votre message a bien été envoyé";
-             $email = (new TemplatedEmail())
+        $info_contact = "";
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $info_contact = " Votre message a bien été envoyé";
+            $email = (new TemplatedEmail())
                 ->from('jpgscn@gmail.com')
                 ->to('jpgscn@gmail.com')
                 ->subject($data['objet'])
@@ -168,17 +159,11 @@ class HomeController extends AbstractController
                 ->context([
                     'data' => $data,
                 ]);
-             //dump($email);
-             $mailer->send($email);
-             //dump($form->getData());
-
-            //return $this->redirectToRoute('app_contact');
+            $mailer->send($email);
         }
-
-     return $this->render('contact.html.twig', [
-       'form' => $form->createView(),
-       'info_contact' => $info_contact,
-      ]);
+        return $this->render('contact.html.twig', [
+            'form' => $form->createView(),
+            'info_contact' => $info_contact,
+        ]);
     }
 }
-

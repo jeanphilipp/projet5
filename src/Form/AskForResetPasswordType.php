@@ -1,12 +1,10 @@
 <?php
-
 namespace App\Form;
-use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+
 class AskForResetPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -21,15 +19,6 @@ class AskForResetPasswordType extends AbstractType
                     'attr' => ['class' => 'btn btn-secondary'],
                 ]);
     }
-
-    /*public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            // Configure your form options here
-            'data_class' => User::class
-        ]);
-    }*/
 }
-
 
 

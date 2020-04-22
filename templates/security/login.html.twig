@@ -1,70 +1,70 @@
 {% extends 'base.html.twig' %}
 {% block title %}Connexion{% endblock %}
-{% block content %}
-    {% for message in app.flashes('message') %}
-        <div class="alert alert-success" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-
-    {% for message in app.flashes('warning') %}
-        <div class="alert alert-warning" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-
-    {% for message in app.flashes('danger') %}
-        <div class="alert alert-danger" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    {% if app.user %}
-        <div class="mb-3">
-            Vous êtes connecté en tant que {{ app.user.pseudo }}&nbsp;<a class="btn btn-secondary"
-                                                                         href="{{ path('app_logout') }}">Déconnexion</a>
-            <p><a class="text-secondary font-weight-bold" href="{{ path('app_show_profile') }}">Voir votre compte</a>
-            </p>
-        </div>
-        {% if is_granted('ROLE_ADMIN') %}
-            <a class="btn btn-secondary" href="{{ path('app_admin') }}">Voir les réservations</a>
-            &nbsp;<a class="btn btn-secondary" href="{{ path('app_comments_show') }}">Voir les avis</a>
-        {% endif %}
-    {% else %}
-
-        <form method="post">
-            <label for="inputPseudo">Pseudo</label>
-            <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control"
-                   placeholder="Votre pseudo" required autofocus><br>
-            <label for="inputPassword">Mot de passe</label>
-            <input type="password" name="password" id="inputPassword" class="form-control"
-                   placeholder="Votre mot de passe"
-                   required>
-            <input type="hidden" name="_csrf_token"
-                   value="{{ csrf_token('authenticate') }}">
-            <br>
-            <button class="btn btn-secondary" type="submit">
-                Connectez-vous
-            </button>
-
-            <a class="text-secondary font-weight-bold" href="{{ path('app_ask_for_reset') }}">Mot de passe oublié</a>
-            <span class="h4"><a class="btn btn-secondary"
-                                href="{{ path('security_registration') }}">Créez votre compte</a></span>
-        </form>
-    {% endif %}
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-    <br>
+{% block head %}
+    {{ parent() }}
 {% endblock %}
+{% block body %}
+    <div class="container">
+        {% block content %}
+            {% for message in app.flashes('message') %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    Vous êtes connecté en tant que {{ app.user.pseudo }}&nbsp;<a class="btn btn-secondary"
+                                                                                 href="{{ path('app_logout') }}">Déconnexion</a>
+                    <p><a class="text-secondary font-weight-bold" href="{{ path('app_show_profile') }}">Voir votre
+                            compte</a>
+                    </p>
+                </div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="btn btn-secondary" href="{{ path('app_admin') }}">Voir les réservations</a>
+                    &nbsp;<a class="btn btn-secondary" href="{{ path('app_comments_show') }}">Voir les avis</a>
+                {% endif %}
+            {% else %}
+
+                <form method="post">
+                    <label for="inputPseudo">Pseudo</label>
+                    <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control"
+                           placeholder="Votre pseudo" required autofocus><br>
+                    <label for="inputPassword">Mot de passe</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control"
+                           placeholder="Votre mot de passe"
+                           required>
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}">
+                    <br>
+                    <button class="btn btn-secondary" type="submit">
+                        Connectez-vous
+                    </button>
+                    <a class="text-secondary font-weight-bold" href="{{ path('app_ask_for_reset') }}">Mot de passe
+                        oublié ?</a>
+                    <span class="h4"><a class="btn btn-secondary"
+                                        href="{{ path('security_registration') }}">Créez votre compte</a></span>
+                </form>
+            {% endif %}
+            <br>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+

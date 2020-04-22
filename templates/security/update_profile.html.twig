@@ -8,24 +8,17 @@
         {% block content %}
             <div class="row">
                 <div class="col-12">
+                    <p class="font-weight-bold">{{ message }}</p>
                     <p class="h4">Modifier votre compte : </p>
                     <br />
-
-                    <form method="POST">
-                        <label for="pass">Email</label>
-                        <input type="Email" placeholder="Email" name="{{ app.user.email }}" class="form-control" required>
-                        <label for="pass">Mot de passe actuel</label>
-                        <input type="password" placeholder="Mot de passe actuel" name="password" class="form-control" required>
-                        <label for="pass">Nouveau mot de passe</label>
-                        <input type="password" placeholder="Nouveau mot de passe" name="password" class="form-control" required>
-                        <label for="pass">Confirmez votre mot de passe</label>
-                        <input type="password" placeholder="Confirmez votre nouveau mot de passe" name="password" class="form-control" required>
-                        <br />
-                        <button type="submit" class="btn btn-secondary">Enregistrer</button>
-                    </form>
+                    {{ form_start(form) }}
+                    {{ form_row(form.email,{'label':'Email','attr': {'placeholder':'Votre email'}}) }}
+                    {{ form_row(form.password,{'label':'Mot de passe','attr': {'placeholder':'Votre mot de passe'}}) }}
+                    {{ form_row(form.confirm_password,{'label':'Confirmation mot de passe','attr': {'placeholder':'Répétez votre mot de passe'}}) }}
+                    <button type="submit" class="btn btn-secondary">Enregistrer</button>
+                    {{ form_end(form) }}
                 </div>
             </div>
         {% endblock %}
     </div>
-
 {% endblock %}

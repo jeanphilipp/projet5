@@ -4,34 +4,35 @@
     {{ parent() }}
 {% endblock %}
 {% block body %}
-
-    {% block content %}
-        <table class="table table-bordered table-striped table-condensed">
-            <thead>
-            <tr>
-                <th>Nom du chat</th>
-                <th>Propriétaire</th>
-                <th>Dates de réservation</th>
-                <th>Prix du séjour</th>
-            </tr>
-            </thead>
-            {% for cat in cats %}
+    <div class="container">
+        {% block content %}
+            <table class="table table-bordered table-striped table-condensed">
+                <thead>
                 <tr>
-                    <td>{{ cat.catName }}</td>
-                    <td>{{ cat.user.pseudo }}</td>
-                    <td>{% for booking in cat.bookings %}
-                            {# @var booking \App\Entity\Booking #}
-                            <p>Du {{ booking.startDate|date("d/m/Y") }} au {{ booking.exitDate|date("d/m/Y") }}</p>
-                        {% endfor %}</td>
-                    <td>
-                        {% for booking in cat.bookings %}
-                            <p> {{ booking.priceStay }} euros</p>
-                        {% endfor %}
-                    </td>
+                    <th>Nom du chat</th>
+                    <th>Propriétaire</th>
+                    <th>Dates de réservation</th>
+                    <th>Prix du séjour</th>
                 </tr>
-            {% endfor %}
-        </table>
-    {% endblock %}
+                </thead>
+                {% for cat in cats %}
+                    <tr>
+                        <td>{{ cat.catName }}</td>
+                        <td>{{ cat.user.pseudo }}</td>
+                        <td>{% for booking in cat.bookings %}
+                                {# @var booking \App\Entity\Booking #}
+                                <p>Du {{ booking.startDate|date("d/m/Y") }} au {{ booking.exitDate|date("d/m/Y") }}</p>
+                            {% endfor %}</td>
+                        <td>
+                            {% for booking in cat.bookings %}
+                                <p> {{ booking.priceStay }} euros</p>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    </div>
 {% endblock %}
 
 

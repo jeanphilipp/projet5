@@ -4,48 +4,53 @@
     {{ parent() }}
 {% endblock %}
 {% block body %}
-    {% block content %}
-        <div class="row">
-            <div class="col-12">
-                <p>Notre pension se situe dans un grand parc arboré.
-                    Chaque pensionnaire a un box personnalisé de 4 m2, avec un panier et des jouets.
-                    S'il le souhaite, votre chat pourra se rendre dans une grande salle où il pourra jouer avec ses
-                    congénères.
-                    De plus, s'il aime sortir, nous pouvons mettre à sa disposition un box avec une ouverture sur le
-                    jardin,
-                    qui est complètement
-                    clôturé et sécurisé.
-                </p>
+    <div class="container">
+        {% block content %}
+            <div class="row">
+                <div class="col-12">
+                    <p>Notre pension se situe dans un grand parc arboré.
+                        Chaque pensionnaire a un box personnalisé de 4 m2, avec un panier et des jouets.
+                        S'il le souhaite, votre chat pourra se rendre dans une grande salle où il pourra jouer avec ses
+                        congénères.
+                        De plus, s'il aime sortir, nous pouvons mettre à sa disposition un box avec une ouverture sur le
+                        jardin,
+                        qui est complètement
+                        clôturé et sécurisé.
+                    </p>
+                </div>
             </div>
-        </div>
-        <hr>
-        <div class="row ">
-            <div class="col-12">
-                <p class="text-left font-weight-bold">({{ comments|length }}) avis :</p>
+            <hr>
+            <div class="row ">
+                <div class="col-12">
+                    <p class="text-left font-weight-bold">({{ comments|length }}) avis :</p>
+                </div>
             </div>
-        </div>
-        <ul class="avis">
-            {% for comment in comments %}
-                <li class="liste-avis text-left">
-                    {{ comment.content }}<p class="small">Posté par
-                        {% if comment.user is not null %}
-                            {{ comment.user.pseudo }}
-                        {% else %}
-                            Inconnu
-                        {% endif %}
-                        le {{ comment.createdAt|date('d-m-Y') }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-        {% if app.user %}
-            {{ form_start(form) }}
-            {{ form_row(form.content,{'label':'Avis','attr': {'placeholder':'Ecrivez votre avis ici'}}) }}
-            <button type="submit" class="btn btn-secondary">Envoyer</button>
-            {{ form_end(form) }}
-        {% else %}
-            <p>Si vous souhaitez poster un avis, vous devez &nbsp;<a class="btn btn-secondary" role="button" href="{{ path('app_login') }}"> vous connecter</a></p>
-        {% endif %}
-        <p>Si vous souhaitez nous contacter &nbsp;<a class="btn btn-secondary" role="button" href="{{ path('app_contact') }}"> cliquez ici</a></p>
-    {% endblock %}
+            <ul class="avis">
+                {% for comment in comments %}
+                    <li class="liste-avis text-left">
+                        {{ comment.content }}<p class="small">Posté par
+                            {% if comment.user is not null %}
+                                {{ comment.user.pseudo }}
+                            {% else %}
+                                Inconnu
+                            {% endif %}
+                            le {{ comment.createdAt|date('d-m-Y') }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% if app.user %}
+                {{ form_start(form) }}
+                {{ form_row(form.content,{'label':'Avis','attr': {'placeholder':'Ecrivez votre avis ici'}}) }}
+                <button type="submit" class="btn btn-secondary">Envoyer</button>
+                {{ form_end(form) }}
+            {% else %}
+                <p>Si vous souhaitez poster un avis, vous devez &nbsp;<a class="btn btn-secondary" role="button"
+                                                                         href="{{ path('app_login') }}"> vous
+                        connecter</a></p>
+            {% endif %}
+            <p>Si vous souhaitez nous contacter &nbsp;<a class="btn btn-secondary" role="button"
+                                                         href="{{ path('app_contact') }}"> cliquez ici</a></p>
+        {% endblock %}
+    </div>
 {% endblock %}
 

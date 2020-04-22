@@ -1,50 +1,50 @@
 body
 {
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
     font-family: Verdana, Arial, sans-serif;
     background-color: #F6F7F9;
     color: #fff;
 }
 .avis{
-    display:block;
-    padding:0;
+    display: block;
+    padding: 0px;
 }
 .avis .liste-avis{
     display: block;
-    padding: 0;
+    padding: 0px;
     font-style: italic;
 }
 .container {
    background-image: url("../images/chat.jpg");
-    background-repeat:no-repeat;
-    padding:0;
+    background-repeat: no-repeat;
+    padding: 0px;
 }
 h1{
-    padding: 2em 0;
+    padding: 2em 0px;
     text-align: center;
     font-style: italic;
     font-size: 4em;
-    color:#fff;
+    color: #fff;
     text-shadow: #fff 0 0 20px;
 }
 nav {
     background-color: #c7b79d;
 }
 .navbar-brand {
-    color:#FFFFFF;
+    color: #FFFFFF;
     text-decoration: none;
     font-size: 1.4em;
     font-family: arial;
-    color:#653512;
+    color: #653512;
 }
 .navbar-brand:hover{
-    color:#FFFFFF;
+    color: #FFFFFF;
 }
 ul{
-    margin: 0;
-    padding:0;
-    display:flex;
+    margin: 0px;
+    padding:0px;
+    display: flex;
     justify-content: center;
 }
 ul li{
@@ -65,25 +65,24 @@ ul li{
     font-weight: bold;
 }
 #content p{
-    margin-top:0;
-    margin-bottom:0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
     font-size: 1.2em;
-    line-height: 1.5;
 }
 .h5{
-    color :#653512;
+    color : #653512;
 }
 #footer{
     background-color: #c7b79d;
     background-size: 100%;
     text-align: center;
-    padding:25px 0;
-    color:#653512;
+    padding: 25px 0;
+    color: #653512;
     font-weight: bold;
 }
 #footer a{
     text-decoration: none;
-    color:#653512;
+    color: #653512;
     font-style: italic;
     font-weight: bold;
 }
@@ -96,28 +95,32 @@ ul li{
     }
     .menu{
         display: block;
-        width:100%;
+        width: 100%;
         background: #000;
         text-align: right;
 
     }
     .burger{
-        color:#fff;
+        color: #fff;
         margin-right: 25px;
-        font-size:40px;
+        font-size: 40px;
         cursor: pointer;
     }
     ul {
-        display:none;
+        display: none;
     }
     .active {
-        display:flex;
+        display: flex;
         flex-direction: column;
         align-items: center;
     }
     .active li{
-        padding:0px 20px;
-        font-size:0.8em;
+        padding: 0px 20px;
+        font-size: 0.8em;
+    }
+    .text-secondary{
+        display: flex;
+        justify-content: center;
     }
 }
 
