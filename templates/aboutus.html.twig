@@ -31,8 +31,6 @@
                         {{ comment.content }}<p class="small">Posté par
                             {% if comment.user is not null %}
                                 {{ comment.user.pseudo }}
-                            {% else %}
-                                Inconnu
                             {% endif %}
                             le {{ comment.createdAt|date('d-m-Y') }}</p>
                     </li>
@@ -44,9 +42,7 @@
                 <button type="submit" class="btn btn-secondary">Envoyer</button>
                 {{ form_end(form) }}
             {% else %}
-                <p>Si vous souhaitez poster un avis, vous devez &nbsp;<a class="btn btn-secondary" role="button"
-                                                                         href="{{ path('app_login') }}"> vous
-                        connecter</a></p>
+                <p>Si vous souhaitez poster un avis, vous devez &nbsp;<a class="btn btn-secondary" role="button" href="{{ path('app_login') }}"> vous connecter</a></p>
             {% endif %}
             <p>Si vous souhaitez nous contacter &nbsp;<a class="btn btn-secondary" role="button"
                                                          href="{{ path('app_contact') }}"> cliquez ici</a></p>

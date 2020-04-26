@@ -69,9 +69,6 @@ ul li{
     margin-bottom: 0px;
     font-size: 1.2em;
 }
-.h5{
-    color : #653512;
-}
 #footer{
     background-color: #c7b79d;
     background-size: 100%;
@@ -87,7 +84,6 @@ ul li{
     font-weight: bold;
 }
 /************* MEDIA QUERIES ********************/
-/* 899 */
 @media screen and (max-width: 990px){
 
     h1{
