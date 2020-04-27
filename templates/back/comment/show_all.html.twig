@@ -17,7 +17,7 @@
                     <tr>
                         <td>{{ comment.content }}</td>
                         <td>{{ comment.user.pseudo }}</td>
-                        <td><a href="{{ path('app_comment_delete', {id:comment.id}) }}">Supprimer</a></td>
+                        <td><a class="text-secondary font-weight-bold" href="{{ path('app_comment_delete', {id:comment.id}) }}">Supprimer</a></td>
                     </tr>
                 {% endfor %}
             </table>

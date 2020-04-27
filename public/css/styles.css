@@ -83,6 +83,7 @@ ul li{
     font-style: italic;
     font-weight: bold;
 }
+
 /************* MEDIA QUERIES ********************/
 @media screen and (max-width: 990px){
 
@@ -117,6 +118,11 @@ ul li{
     .text-secondary{
         display: flex;
         justify-content: center;
+    }
+    #tableau{
+        width: 100%;
+        font-size: 0.6em;
+        display:flex;
     }
 }
 

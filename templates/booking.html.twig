@@ -9,10 +9,8 @@
         <span class="font-weight-bold">Pour inscrire un nouveau chat ou voir vos réservations
             <a class="btn btn-secondary" href="{{ path('app_home_create') }}" role="button">Cliquez ici</a></span>
         <hr>
-        <img class="img-fluid" src="{{ asset('images/chat2.jpg') }}" alt="chats">
-        <hr>
-
         {% if app.user %}
+            <div id="tableau">
             <table class="table table-bordered table-striped table-condensed">
                 <thead>
                 <tr>
@@ -22,7 +20,6 @@
                 </tr>
                 </thead>
                 {% for cat in cats %}
-
                     {% for booking in cat.bookings %}
                         <tr>
                             <td>du {{ booking.startDate |date('d-m-Y') }} au {{ booking.exitDate |date('d-m-Y') }}</td>
@@ -36,6 +33,7 @@
                     {% endfor %}
                 {% endfor %}
             </table>
+            </div>
 
             {{ form_start(form) }}
             {{ form_row(form.cat,{'label':'Nom du chat'}) }}
